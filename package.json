@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/ECarlsson/ftek-booking/issues"
   },
-  "homepage": "https://github.com/ECarlsson/ftek-booking#readme"
+  "homepage": "https://github.com/ECarlsson/ftek-booking#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
