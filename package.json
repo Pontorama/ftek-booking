@@ -1,0 +1,19 @@
+{
+  "name": "ftek-booking",
+  "version": "1.0.0",
+  "description": "Booking system for The Physics Division at Chalmers University of Technology",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ECarlsson/ftek-booking.git"
+  },
+  "author": "Eric Carlsson",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/ECarlsson/ftek-booking/issues"
+  },
+  "homepage": "https://github.com/ECarlsson/ftek-booking#readme"
+}
