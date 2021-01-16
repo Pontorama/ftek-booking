@@ -115,6 +115,7 @@ module.exports = {
   unconfirmReservation,
   deleteReservation,
   createTimeslot,
+  updateTimeslot,
   deleteTimeslot,
   createInspectionTime,
   getInspectionTimes,
