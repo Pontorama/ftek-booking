@@ -22,15 +22,14 @@ CREATE TABLE IF NOT EXISTS `timeslots` (
     `name` VARCHAR(100) NOT NULL,
     CHECK (`weekday` >= 0 AND `weekday` <= 6),
     PRIMARY KEY (`id`),
-    CONSTRAINT `room_timeslot` FOREIGN KEY (`room`) REFERENCES `rooms`(`name`) ON DELETE CASCADE
+    CONSTRAINT `timeslot_room` FOREIGN KEY (`room`) REFERENCES `rooms`(`name`) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS `inspection_times` (
     `time` TIME,
     `timeslot` INT UNSIGNED,
-    `room` VARCHAR(100),
-    PRIMARY KEY (`time`, `timeslot`, `room`),
-    CONSTRAINT `inspection_time_timeslot` FOREIGN KEY (`timeslot`, `room`) REFERENCES `timeslots`(`id`, `room`) ON DELETE CASCADE
+    PRIMARY KEY (`time`, `timeslot`),
+    CONSTRAINT `inspection_time_timeslot` FOREIGN KEY (`timeslot`) REFERENCES `timeslots`(`id`) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS `reservations` (
@@ -38,7 +37,6 @@ CREATE TABLE IF NOT EXISTS `reservations` (
     `timestamp` TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     `date` DATE,
     `timeslot` INT UNSIGNED,
-    `room` VARCHAR(100),
     `inspection_time` TIME,
     `email` VARCHAR(100) NOT NULL,
     `name` VARCHAR(50) NOT NULL,
@@ -46,8 +44,8 @@ CREATE TABLE IF NOT EXISTS `reservations` (
     `society` VARCHAR(50),
     `description` TEXT NOT NULL,
     PRIMARY KEY (`id`),
-    CONSTRAINT `reservation_timeslot` FOREIGN KEY (`timeslot`, `room`) REFERENCES `timeslots`(`id`, `room`) ON DELETE CASCADE,
-    CONSTRAINT `reservation_inspection_time` FOREIGN KEY (`inspection_time`, `timeslot`, `room`) REFERENCES `inspection_times`(`time`, `timeslot`, `room`)
+    CONSTRAINT `reservation_timeslot` FOREIGN KEY (`timeslot`) REFERENCES `timeslots`(`id`) ON DELETE CASCADE,
+    CONSTRAINT `reservation_inspection_time` FOREIGN KEY (`inspection_time`, `timeslot`) REFERENCES `inspection_times`(`time`, `timeslot`)
 );
 
 CREATE TABLE IF NOT EXISTS `confirmed_reservations` (
