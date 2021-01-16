@@ -28,25 +28,33 @@ CREATE TABLE IF NOT EXISTS `timeslots` (
 
 CREATE TABLE IF NOT EXISTS `inspection_times` (
     `time` TIME,
-    `timeslot_id` INT UNSIGNED,
+    `timeslot` INT UNSIGNED,
     `room` VARCHAR(100),
-    PRIMARY KEY (`time`, `timeslot_id`, `room`),
-    CONSTRAINT `inspection_time_timeslot` FOREIGN KEY (`timeslot_id`, `room`) REFERENCES `timeslots`(`id`, `room`) ON DELETE CASCADE
+    PRIMARY KEY (`time`, `timeslot`, `room`),
+    CONSTRAINT `inspection_time_timeslot` FOREIGN KEY (`timeslot`, `room`) REFERENCES `timeslots`(`id`, `room`) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS `reservations` (
+    `id` SERIAL,
+    `timestamp` TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     `date` DATE,
-    `timeslot_id` INT UNSIGNED,
+    `timeslot` INT UNSIGNED,
     `room` VARCHAR(100),
     `inspection_time` TIME,
     `email` VARCHAR(100) NOT NULL,
     `name` VARCHAR(50) NOT NULL,
     `cid` VARCHAR(10) NOT NULL,
     `society` VARCHAR(50),
-    `event` VARCHAR(100) NOT NULL,
-    PRIMARY KEY (`date`, `timeslot_id`, `room`),
-    CONSTRAINT `reservation_timeslot` FOREIGN KEY (`timeslot_id`, `room`) REFERENCES `timeslots`(`id`, `room`) ON DELETE CASCADE,
-    CONSTRAINT `reservation_inspection_time` FOREIGN KEY (`inspection_time`, `timeslot_id`, `room`) REFERENCES `inspection_times`(`time`, `timeslot_id`, `room`)
+    `description` TEXT NOT NULL,
+    PRIMARY KEY (`id`),
+    CONSTRAINT `reservation_timeslot` FOREIGN KEY (`timeslot`, `room`) REFERENCES `timeslots`(`id`, `room`) ON DELETE CASCADE,
+    CONSTRAINT `reservation_inspection_time` FOREIGN KEY (`inspection_time`, `timeslot`, `room`) REFERENCES `inspection_times`(`time`, `timeslot`, `room`)
+);
+
+CREATE TABLE IF NOT EXISTS `confirmed_reservations` (
+    `reservation` BIGINT UNSIGNED,
+    PRIMARY KEY (`reservation`),
+    CONSTRAINT `confirmed_reservation` FOREIGN KEY (`reservation`) REFERENCES `reservations`(`id`) ON DELETE CASCADE
 );
 
 COMMIT;
