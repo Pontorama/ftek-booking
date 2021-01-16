@@ -1,5 +1,3 @@
-START TRANSACTION;
-
 CREATE TABLE IF NOT EXISTS `users` (
     `email` VARCHAR(100),
     `name` VARCHAR(50) NOT NULL,
@@ -56,5 +54,3 @@ CREATE TABLE IF NOT EXISTS `confirmed_reservations` (
     PRIMARY KEY (`reservation`),
     CONSTRAINT `confirmed_reservation` FOREIGN KEY (`reservation`) REFERENCES `reservations`(`id`) ON DELETE CASCADE
 );
-
-COMMIT;

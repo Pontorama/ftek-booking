@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const publicController = require('../controllers/public');
+const { getReservations, createReservation } = require('../controllers/public');
 
 router.use(express.json());
 
-router.get('/reservations', publicController.getReservations);
+router.get('/reservations/get', getReservations);
+router.post('/reservations/new', createReservation);
 
 module.exports = router;

@@ -19,18 +19,34 @@ BEGIN
     WHERE `id` NOT IN (SELECT `reservation` FROM `confirmed_reservations`);
 END$$
 
-CREATE PROCEDURE `confirm_reservation` (
+CREATE PROCEDURE `confirm_pending_reservation` (
     IN `reservation_id` BIGINT UNSIGNED
 )
 BEGIN
-    INSERT INTO `confirmed_reservations` VALUES (`reservation_id`);
+    DECLARE `reservation_count` INT UNSIGNED;
+    WITH
+        `slot` AS
+        (SELECT `date`, `timeslot`, `room` FROM `reservations`
+        WHERE `id`=`reservation_id`)
+    SELECT COUNT(`id`) INTO reservation_count FROM `reservations`, `confirmed_reservations`, `slot`
+    WHERE `id`=`reservation` 
+    AND `reservations`.`date`=`slot`.`date` 
+    AND `reservations`.`timeslot`=`slot`.`timeslot` 
+    AND `reservations`.`room`=`slot`.`room`;
+    
+    IF (`reservation_count` = 0) THEN
+        INSERT INTO `confirmed_reservations` VALUES (`reservation_id`);
+    ELSE
+        SIGNAL SQLSTATE '42000' SET MESSAGE_TEXT = '(date, timeslot, room) already exists in table confirmed_reservations';
+    END IF;
 END$$
 
 CREATE PROCEDURE `unconfirm_reservation` (
     IN `reservation_id` BIGINT UNSIGNED
 )
 BEGIN
-    DELETE FROM `confirmed_reservations` 
+    DELETE FROM `confirmed_reservations` WHERE `reservation`=`reservation_id`;
+END$$
 
 CREATE PROCEDURE `create_reservation` (
     IN `p_date` DATE,
