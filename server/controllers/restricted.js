@@ -10,14 +10,14 @@ function getPendingReservations(req, res, next) {
     });
 }
 
-function confirmPendingReservation(req, res, next) {
-  db.query('CALL confirm_pending_reservation(?)',
+function confirmReservation(req, res, next) {
+  db.query('CALL confirm_reservation(?)',
     [req.body.id],
     err => {
       if (err)
         return next(err);
       else
-        res.send();
+        res.status(204).send();
     });
 }
 
@@ -28,7 +28,7 @@ function unconfirmReservation(req, res, next) {
       if (err)
         return next(err);
       else
-        res.send();
+        res.status(204).send();
     });
 }
 
@@ -39,13 +39,84 @@ function deleteReservation(req, res, next) {
     if (err)
       return next(err);
     else
-      res.send();
+      res.status(204).send();
+  });
+}
+
+function createTimeslot(req, res, next) {
+  db.query('CALL create_timeslot(?, ?, ?, ?, ?)',
+  [req.body.room, req.body.from, req.body.to, req.body.weekday, req.body.name],
+  err => {
+    if (err)
+      return next(err);
+    else
+      res.status(201).send();
+  });
+}
+
+function updateTimeslot(req, res, next) {
+  db.query('CALL update_timeslot(?, ?, ?, ?)',
+  [req.body.from, req.body.to, req.body.weekday, req.body.name],
+  err => {
+    if (err)
+      return next(err);
+    else
+      res.status(204).send();
+  });
+}
+
+function deleteTimeslot(req, res, next) {
+  db.query('CALL delete_timeslot(?)',
+  [req.body.id],
+  err => {
+    if (err)
+      return next(err);
+    else
+      res.status(204).send();
+  });
+}
+
+function createInspectionTime(req, res, next) {
+  db.query('CALL create_inspection_time(?, ?, ?)',
+  [req.body.time, req.body.timeslot, req.body.room],
+  err => {
+    if (err)
+      return next(err);
+    else
+      res.status(201).send();
+  });
+}
+
+function getInspectionTimes(req, res, next) {
+  db.query('CALL get_inspection_times(?, ?)',
+  [req.body.timeslot, req.body.room],
+  (err, rows) => {
+    if (err)
+      return next(err);
+    else
+      res.json(rows[0]);
+  });
+}
+
+function deleteInspectionTime(req, res, next) {
+  db.query('CALL delete_inspection_time(?, ?, ?)',
+  [req.body.time, req.body.timeslot, req.body.room],
+  err => {
+    if (err)
+      return next(err);
+    else
+      res.status(204).send();
   });
 }
 
 module.exports = {
   getPendingReservations,
-  confirmPendingReservation,
+  confirmReservation,
   unconfirmReservation,
-  deleteReservation
+  deleteReservation,
+  createTimeslot,
+  deleteTimeslot,
+  createInspectionTime,
+  getInspectionTimes,
+  deleteInspectionTime
 };

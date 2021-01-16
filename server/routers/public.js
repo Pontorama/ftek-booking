@@ -4,7 +4,7 @@ const { getReservations, createReservation } = require('../controllers/public');
 
 router.use(express.json());
 
-router.get('/reservations/get', getReservations);
-router.post('/reservations/new', createReservation);
+router.get('/reservations', getReservations);
+router.post('/reservations', createReservation);
 
 module.exports = router;

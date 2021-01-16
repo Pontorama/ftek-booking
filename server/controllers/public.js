@@ -18,7 +18,7 @@ function createReservation(req, res, next) {
       if (err)
         return next(err);
       else
-        res.send();
+        res.status(201).send();
     }
   );
 }

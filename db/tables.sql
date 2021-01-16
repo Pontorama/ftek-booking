@@ -19,8 +19,9 @@ CREATE TABLE IF NOT EXISTS `timeslots` (
     `from` TIME NOT NULL,
     `to` TIME NOT NULL,
     `weekday` TINYINT NOT NULL,
+    `name` VARCHAR(100) NOT NULL,
     CHECK (`weekday` >= 0 AND `weekday` <= 6),
-    PRIMARY KEY (`id`, `room`),
+    PRIMARY KEY (`id`),
     CONSTRAINT `room_timeslot` FOREIGN KEY (`room`) REFERENCES `rooms`(`name`) ON DELETE CASCADE
 );
 
