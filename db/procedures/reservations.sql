@@ -13,8 +13,9 @@ BEGIN
     VALUES (`p_date`, `p_timeslot`, `p_inspection_time`, `p_email`, `p_name`, `p_cid` , `p_society`, `p_description`);
 END$$
 
+-- TODO: fix this
 CREATE PROCEDURE `get_confirmed_reservations_for_room` (
-    IN `room_id` UNSIGNED INT,
+    IN `room_id` INT UNSIGNED,
     IN `year` YEAR,
     IN `month` TINYINT UNSIGNED
 )

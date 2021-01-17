@@ -24,4 +24,4 @@ CALL `confirm_reservation`(1);
 CALL `confirm_reservation`(3);
 
 CALL `get_pending_reservations`();
-CALL `get_public_reservations`(2021,1);
+CALL `get_confirmed_reservations_for_room`(1,2021,1);
