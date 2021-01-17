@@ -2,7 +2,7 @@ DROP DATABASE IF EXISTS `test`;
 CREATE DATABASE `test`;
 USE `TEST`;
 
-\. ./create.sql
+\. ./db/create.sql
 
 INSERT INTO `rooms`(`name`) VALUES ('Focus');
 INSERT INTO `rooms`(`name`) VALUES ('Hilbert');
