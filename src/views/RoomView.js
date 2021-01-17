@@ -31,7 +31,7 @@ export default function RoomView({ roomId }) {
         <Col>
           <Row>
             <Col>
-              <p className="h3">Bokningsbara tider</p>
+              <p className="h4">Bokningsbara tider</p>
             </Col>
           </Row>
           <Row>
