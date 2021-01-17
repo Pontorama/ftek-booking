@@ -1,29 +1,24 @@
-import { Col, Container, Form, Row } from 'react-bootstrap';
-import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css';
+import { Tab } from 'bootstrap';
+import { useEffect, useState } from 'react';
+import { Spinner, Tabs } from 'react-bootstrap';
+import RoomView from './RoomView';
 
 export default function HomeView() {
+  const [rooms, setRooms] = useState([]);
+
+  useEffect(_=> {
+    fetch('/rooms')
+    .then(res => res.json())
+    .then(data => setRooms(data));
+  }, []);
+  
+  const roomTabs = rooms.map(room => <Tab key={room.id} eventKey={room.id} title={room.name}><RoomView roomId={room.id} /></Tab>);
 
   return (
     <main>
-      <Container>
-        <Row>
-          <Col>
-            <Form>
-              <Form.Group>
-                <Form.Label>Lokal</Form.Label>
-                <Form.Control as="select" custom>
-
-                </Form.Control>
-              </Form.Group>
-            </Form>            
-          </Col>
-        </Row>
-        <Row>
-
-        </Row>
-      </Container>
-      <Calendar />
+      <Tabs>
+        {roomTabs}
+      </Tabs>
     </main>
   );
 }
