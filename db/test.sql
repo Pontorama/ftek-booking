@@ -7,13 +7,13 @@ USE `TEST`;
 \. db/procedures.sql
 
 
-INSERT INTO `rooms` VALUES ('Focus', NULL);
-INSERT INTO `rooms` VALUES ('Hilbert', NULL);
+INSERT INTO `rooms`(`name`) VALUES ('Focus');
+INSERT INTO `rooms`(`name`) VALUES ('Hilbert');
 
-CALL `create_timeslot`('Focus', '12:00:00', '14:00:00', 0, 'Timeslot 1');
-CALL `create_timeslot`('Focus', '14:00:00', '16:00:00', 0, 'Timeslot 2');
-CALL `create_timeslot`('Focus', '16:00:00', '18:00:00', 5, 'Timeslot 1');
-CALL `create_timeslot`('Hilbert', '14:00:00', '16:00:00', 1, 'Timeslot 1');
+CALL `create_timeslot`(1, '12:00:00', '14:00:00', 0, 'Timeslot 1');
+CALL `create_timeslot`(1, '14:00:00', '16:00:00', 0, 'Timeslot 2');
+CALL `create_timeslot`(1, '16:00:00', '18:00:00', 5, 'Timeslot 1');
+CALL `create_timeslot`(2, '14:00:00', '16:00:00', 1, 'Timeslot 1');
 
 CALL `create_inspection_time`('14:00:00', 1);
 CALL `create_inspection_time`('16:00:00', 2);

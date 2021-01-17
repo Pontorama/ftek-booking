@@ -9,22 +9,23 @@ CREATE TABLE IF NOT EXISTS `users` (
 );
 
 CREATE TABLE IF NOT EXISTS `rooms` (
-    `name` VARCHAR(100),
-    `manager` INTEGER UNSIGNED,
-    PRIMARY KEY (`name`),
+    `id` INTEGER UNSIGNED AUTO_INCREMENT,
+    `name` VARCHAR(100) NOT NULL,
+    `manager` INTEGER UNSIGNED DEFAULT NULL,
+    PRIMARY KEY (`id`),
     CONSTRAINT `room_manager` FOREIGN KEY (`manager`) REFERENCES `users`(`id`)
 );
 
 CREATE TABLE IF NOT EXISTS `timeslots` (
     `id` INT UNSIGNED AUTO_INCREMENT,
-    `room` VARCHAR(100),
+    `room` INT UNSIGNED,
     `from` TIME NOT NULL,
     `to` TIME NOT NULL,
     `weekday` TINYINT NOT NULL,
     `name` VARCHAR(100) NOT NULL,
     CHECK (`weekday` >= 0 AND `weekday` <= 6),
     PRIMARY KEY (`id`),
-    CONSTRAINT `timeslot_room` FOREIGN KEY (`room`) REFERENCES `rooms`(`name`) ON DELETE CASCADE
+    CONSTRAINT `timeslot_room` FOREIGN KEY (`room`) REFERENCES `rooms`(`id`) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS `inspection_times` (
