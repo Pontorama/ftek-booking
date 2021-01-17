@@ -1,8 +1,40 @@
 const db = require('../db');
 
-function getReservations(req, res, next) {
-  db.query('CALL get_public_reservations(?, ?)',
-    [req.body.year, req.body.month],
+function getRooms(req, res, next) {
+  db.query('CALL get_rooms()',
+    (err, rows) => {
+      if (err)
+        return next(err);
+      else
+        res.json(rows[0]);
+    });
+}
+
+function getTimeslots(req, res, next) {
+  db.query('CALL get_timeslots(?)',
+    [req.params.id],
+    (err, rows) => {
+      if (err)
+        return next(err);
+      else
+        res.json(rows[0]);
+    });
+}
+
+function getInspectionTimes(req, res, next) {
+  db.query('CALL get_inspection_times(?)',
+  [req.params.id],
+  (err, rows) => {
+    if (err)
+      return next(err);
+    else
+      res.json(rows[0]);
+  });
+}
+
+function getConfirmedReservationsForRoom(req, res, next) {
+  db.query('CALL get_public_reservations(?, ?, ?)',
+    [req.params.room, req.query.year, req.query.month],
     (err, rows) => {
       if (err)
         return next(err);
@@ -24,6 +56,9 @@ function createReservation(req, res, next) {
 }
 
 module.exports = {
-  getReservations,
+  getRooms,
+  getTimeslots,
+  getInspectionTimes,
+  getConfirmedReservationsForRoom,
   createReservation
 };

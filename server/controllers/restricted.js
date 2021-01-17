@@ -13,7 +13,7 @@ function getPendingReservations(req, res, next) {
 
 function confirmReservation(req, res, next) {
   db.query('CALL confirm_reservation(?)',
-    [req.body.id],
+    [req.params.id],
     err => {
       if (err)
         return next(err);
@@ -24,7 +24,7 @@ function confirmReservation(req, res, next) {
 
 function unconfirmReservation(req, res, next) {
   db.query('CALL unconfirm_reservation(?)',
-    [req.body.id],
+    [req.params.id],
     err => {
       if (err)
         return next(err);
@@ -35,7 +35,7 @@ function unconfirmReservation(req, res, next) {
 
 function deleteReservation(req, res, next) {
   db.query('CALL delete_reservation(?)',
-  [req.body.id],
+  [req.params.id],
   err => {
     if (err)
       return next(err);
@@ -56,8 +56,8 @@ function createTimeslot(req, res, next) {
 }
 
 function updateTimeslot(req, res, next) {
-  db.query('CALL update_timeslot(?, ?, ?, ?)',
-  [req.body.from, req.body.to, req.body.weekday, req.body.name],
+  db.query('CALL update_timeslot(?, ?, ?, ?, ?)',
+  [req.params.id, req.body.from, req.body.to, req.body.weekday, req.body.name],
   err => {
     if (err)
       return next(err);
@@ -68,7 +68,7 @@ function updateTimeslot(req, res, next) {
 
 function deleteTimeslot(req, res, next) {
   db.query('CALL delete_timeslot(?)',
-  [req.body.id],
+  [req.params.id],
   err => {
     if (err)
       return next(err);
@@ -78,8 +78,8 @@ function deleteTimeslot(req, res, next) {
 }
 
 function createInspectionTime(req, res, next) {
-  db.query('CALL create_inspection_time(?, ?, ?)',
-  [req.body.time, req.body.timeslot, req.body.room],
+  db.query('CALL create_inspection_time(?, ?)',
+  [req.params.id, req.body.time],
   err => {
     if (err)
       return next(err);
@@ -88,20 +88,9 @@ function createInspectionTime(req, res, next) {
   });
 }
 
-function getInspectionTimes(req, res, next) {
-  db.query('CALL get_inspection_times(?, ?)',
-  [req.body.timeslot, req.body.room],
-  (err, rows) => {
-    if (err)
-      return next(err);
-    else
-      res.json(rows[0]);
-  });
-}
-
 function deleteInspectionTime(req, res, next) {
-  db.query('CALL delete_inspection_time(?, ?, ?)',
-  [req.body.time, req.body.timeslot, req.body.room],
+  db.query('CALL delete_inspection_time(?, ?)',
+  [req.params.id, req.params.time],
   err => {
     if (err)
       return next(err);
@@ -128,7 +117,7 @@ function createUser(req, res, next) {
 
 function deleteUser(req, res, next) {
   db.query('CALL delete_user(?)',
-    [req.body.id],
+    [req.params.id],
     err => {
       if (err)
         return next(err);
@@ -147,7 +136,6 @@ module.exports = {
   updateTimeslot,
   deleteTimeslot,
   createInspectionTime,
-  getInspectionTimes,
   deleteInspectionTime,
   createUser,
   deleteUser

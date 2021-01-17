@@ -30,7 +30,7 @@ BEGIN
     DELETE FROM `timeslots` WHERE `id`=`timeslot_id`;
 END$$
 
-CREATE PROCEDURE `get_timeslots_for_room` (
+CREATE PROCEDURE `get_timeslots` (
     IN `room_id` INTEGER UNSIGNED
 )
 BEGIN
