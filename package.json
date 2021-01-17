@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "private": true,
   "description": "Booking system for The Physics Division at Chalmers University of Technology",
-  "homepage": "https://github.com/ECarlsson/ftek-booking#readme",
   "bugs": {
     "url": "https://github.com/ECarlsson/ftek-booking/issues"
   },
@@ -38,11 +37,13 @@
       "react-app/jest"
     ]
   },
+  "proxy": "http://localhost:3000",
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.3",
     "@testing-library/user-event": "^12.6.0",
     "bcrypt": "^5.0.0",
+    "bootstrap": "^4.5.3",
     "cookie-parser": "^1.4.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
@@ -50,7 +51,10 @@
     "mysql": "^2.18.1",
     "path": "^0.12.7",
     "react": "^17.0.1",
+    "react-bootstrap": "^1.4.3",
+    "react-calendar": "^3.3.0",
     "react-dom": "^17.0.1",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
     "web-vitals": "^0.2.4"
   },

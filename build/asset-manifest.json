@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.js": "/ECarlsson/ftek-bookingstatic/js/main.03005702.chunk.js",
+    "main.js.map": "/ECarlsson/ftek-bookingstatic/js/main.03005702.chunk.js.map",
+    "runtime-main.js": "/ECarlsson/ftek-bookingstatic/js/runtime-main.1f2aa160.js",
+    "runtime-main.js.map": "/ECarlsson/ftek-bookingstatic/js/runtime-main.1f2aa160.js.map",
+    "static/js/2.516efac8.chunk.js": "/ECarlsson/ftek-bookingstatic/js/2.516efac8.chunk.js",
+    "static/js/2.516efac8.chunk.js.map": "/ECarlsson/ftek-bookingstatic/js/2.516efac8.chunk.js.map",
+    "index.html": "/ECarlsson/ftek-bookingindex.html",
+    "static/js/2.516efac8.chunk.js.LICENSE.txt": "/ECarlsson/ftek-bookingstatic/js/2.516efac8.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.1f2aa160.js",
+    "static/js/2.516efac8.chunk.js",
+    "static/js/main.03005702.chunk.js"
+  ]
+}
