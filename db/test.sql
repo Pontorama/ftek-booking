@@ -6,10 +6,9 @@ USE `TEST`;
 \. db/views.sql
 \. db/procedures.sql
 
-INSERT INTO `users`(`email`, `name`, `password`) VALUES ('foo@bar.se', 'FooBar', 'SomePassword');
 
-INSERT INTO `rooms` VALUES ('Focus', 'foo@bar.se');
-INSERT INTO `rooms` VALUES ('Hilbert', 'foo@bar.se');
+INSERT INTO `rooms` VALUES ('Focus', NULL);
+INSERT INTO `rooms` VALUES ('Hilbert', NULL);
 
 CALL `create_timeslot`('Focus', '12:00:00', '14:00:00', 0, 'Timeslot 1');
 CALL `create_timeslot`('Focus', '14:00:00', '16:00:00', 0, 'Timeslot 2');

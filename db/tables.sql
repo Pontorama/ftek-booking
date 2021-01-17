@@ -1,16 +1,18 @@
 CREATE TABLE IF NOT EXISTS `users` (
-    `email` VARCHAR(100),
+    `id` INTEGER UNSIGNED AUTO_INCREMENT,
+    `email` VARCHAR(100) NOT NULL,
     `name` VARCHAR(50) NOT NULL,
-    `isAdmin` BOOLEAN DEFAULT FALSE NOT NULL,
-    `password` VARCHAR(255) NOT NULL,
-    PRIMARY KEY (`email`)
+    `isAdmin` BOOLEAN NOT NULL,
+    `password` VARCHAR(60) NOT NULL,
+    PRIMARY KEY (`id`),
+    CONSTRAINT `user_unique_email` UNIQUE (`email`)
 );
 
 CREATE TABLE IF NOT EXISTS `rooms` (
     `name` VARCHAR(100),
-    `manager` VARCHAR(100),
+    `manager` INTEGER UNSIGNED,
     PRIMARY KEY (`name`),
-    CONSTRAINT `room_manager` FOREIGN KEY (`manager`) REFERENCES `users`(`email`)
+    CONSTRAINT `room_manager` FOREIGN KEY (`manager`) REFERENCES `users`(`id`)
 );
 
 CREATE TABLE IF NOT EXISTS `timeslots` (
