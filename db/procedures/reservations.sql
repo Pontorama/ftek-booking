@@ -9,11 +9,16 @@ CREATE PROCEDURE `create_reservation` (
     IN `p_description` TEXT 
 )
 BEGIN
-    INSERT INTO `reservations`(`date`, `timeslot`, `inspection_time`, `email`, `name`, `cid` , `society`, `description`)
-    VALUES (`p_date`, `p_timeslot`, `p_inspection_time`, `p_email`, `p_name`, `p_cid` , `p_society`, `p_description`);
+    IF EXISTS 
+        (SELECT '' FROM `timeslots` WHERE `weekday`=WEEKDAY(`p_date`) AND `id`=`p_timeslot`)
+    THEN
+        INSERT INTO `reservations`(`date`, `timeslot`, `inspection_time`, `email`, `name`, `cid` , `society`, `description`)
+        VALUES (`p_date`, `p_timeslot`, `p_inspection_time`, `p_email`, `p_name`, `p_cid` , `p_society`, `p_description`);
+    ELSE
+        SIGNAL SQLSTATE '42000' SET MESSAGE_TEXT = 'invalid timeslot for given date';
+    END IF;
 END$$
 
--- TODO: fix this
 CREATE PROCEDURE `get_confirmed_reservations_for_room` (
     IN `room_id` INT UNSIGNED,
     IN `year` YEAR,
@@ -23,7 +28,7 @@ BEGIN
     IF (`month` > 12 OR `month` < 1) THEN
         SIGNAL SQLSTATE '22003' SET MESSAGE_TEXT = 'Out of range value for month';
     END IF;
-    SELECT `date`, `room`, `reservations`.`name`, `society` FROM `reservations`, `confirmed_reservations`, `timeslots`
+    SELECT `date`, `timeslot`, `reservations`.`name`, `society` FROM `reservations`, `confirmed_reservations`, `timeslots`
     WHERE `reservations`.`id`=`reservation` AND `timeslots`.`id`=`timeslot` AND YEAR(`date`)=`year` AND MONTH(`date`)=`month`;
 END$$
 
@@ -38,17 +43,16 @@ CREATE PROCEDURE `confirm_reservation` (
     IN `reservation_id` BIGINT UNSIGNED
 )
 BEGIN
-    DECLARE `reservation_count` INT UNSIGNED;
-    WITH
-        `slot` AS
-        (SELECT `date`, `timeslot` FROM `reservations`
-        WHERE `id`=`reservation_id`)
-    SELECT COUNT(`id`) INTO reservation_count FROM `reservations`, `confirmed_reservations`, `slot`
-    WHERE `id`=`reservation` 
-    AND `reservations`.`date`=`slot`.`date` 
-    AND `reservations`.`timeslot`=`slot`.`timeslot`;
-
-    IF (`reservation_count` = 0) THEN
+    IF NOT EXISTS
+        (WITH
+            `slot` AS
+            (SELECT `date`, `timeslot` FROM `reservations`
+            WHERE `id`=`reservation_id`)
+        SELECT '' FROM `reservations`, `confirmed_reservations`, `slot`
+        WHERE `id`=`reservation` 
+        AND `reservations`.`date`=`slot`.`date` 
+        AND `reservations`.`timeslot`=`slot`.`timeslot`)
+    THEN
         INSERT INTO `confirmed_reservations` VALUES (`reservation_id`);
     ELSE
         SIGNAL SQLSTATE '42000' SET MESSAGE_TEXT = '(date, timeslot) already exists in table confirmed_reservations';
