@@ -4,7 +4,6 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 
 export default function RoomView({ roomId }) {
-
   const [timeslots, setTimeslots] = useState([]);
   const [activeDate, setActiveDate] = useState(new Date()); // react-calendar uses today as default active date
 
