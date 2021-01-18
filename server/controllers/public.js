@@ -33,7 +33,7 @@ function getInspectionTimes(req, res, next) {
 }
 
 function getConfirmedReservationsForRoom(req, res, next) {
-  db.query('CALL get_public_reservations(?, ?, ?)',
+  db.query('CALL get_confirmed_reservations_for_room(?, ?, ?)',
     [req.params.room, req.query.year, req.query.month],
     (err, rows) => {
       if (err)
