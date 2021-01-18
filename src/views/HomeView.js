@@ -1,6 +1,6 @@
 import { Tab } from 'bootstrap';
 import { useEffect, useState } from 'react';
-import { Container, Spinner, Tabs } from 'react-bootstrap';
+import { Container, Tabs } from 'react-bootstrap';
 import RoomView from './RoomView';
 
 export default function HomeView() {
@@ -17,7 +17,7 @@ export default function HomeView() {
   return (
     <main>
       <Container>
-        <Tabs className="mb-2" >
+        <Tabs className="mb-2">
           {roomTabs}
         </Tabs>
       </Container>
