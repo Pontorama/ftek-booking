@@ -11,6 +11,8 @@ function loginUser(req, res, next) {
         return next(err);
       else {
         const user = JSON.parse(JSON.stringify(rows[0]))[0];
+        if (!user)
+          return res.status(403).send();
         bcrypt.compare(req.body.password, user.password,
           (err, correct) => {
             if (err)
