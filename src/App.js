@@ -5,12 +5,12 @@ import HomeView from './views/HomeView';
 import 'bootstrap/dist/css/bootstrap.css';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import SessionContext from './context/SessionContext';
+import UserSessionContext from './context/UserSessionContext';
 
 function App() {
-  const [session, setSession] = useState(false);
+  const [userSession, setUserSession] = useState(null);
   return (
-    <SessionContext.Provider value={{session, setSession}}>
+    <UserSessionContext.Provider value={{userSession, setUserSession}}>
       <Router basename="/">
         <Header />
         <Switch>
@@ -20,7 +20,7 @@ function App() {
         </Switch>
         <Footer />
       </Router>
-    </SessionContext.Provider>
+    </UserSessionContext.Provider>
   );
 }
 

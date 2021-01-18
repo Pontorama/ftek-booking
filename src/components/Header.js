@@ -1,23 +1,23 @@
 import { useState, useContext } from 'react';
 import { Button, Container, Nav, Navbar } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import SessionContext from '../context/SessionContext';
+import UserSessionContext from '../context/UserSessionContext';
 import ftekLogo from '../img/ftek.svg';
 import HelpModal from './HelpModal';
 import LoginModal from './LoginModal';
 import RulesModal from './RulesModal';
 
 export default function Header() {
-  const { session, setSession } = useContext(SessionContext);
+  const { userSession, setUserSession } = useContext(UserSessionContext);
   const [showHelpModal, setShowHelpModal] = useState(false);
   const [showRulesModal, setShowRulesModal] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
-  
+
   function handleLogout() {
     fetch('/logout', {
       method: 'DELETE'
     })
-    .then(_ => setSession(false));
+    .then(_ => setUserSession(null));
   }
 
   return (
@@ -37,12 +37,12 @@ export default function Header() {
           <Nav>
             <Nav.Link onClick={_ => setShowHelpModal(true)}>Hjälp</Nav.Link>
             <Nav.Link onClick={_ => setShowRulesModal(true)}>Bokningsregler</Nav.Link>
-            {session && <Nav.Link as={Link} to="/">Hem</Nav.Link>}
-            {session && <Nav.Link as={Link} to="/dashboard">Hantera bokningar</Nav.Link>}
+            {userSession && <Nav.Link as={Link} to="/">Hem</Nav.Link>}
+            {userSession && <Nav.Link as={Link} to="/dashboard">Hantera bokningar</Nav.Link>}
           </Nav>
           <Navbar.Collapse className="justify-content-end" />
           <Navbar.Text>
-            {session ? 
+            {userSession ? 
             <Button className="shadow-none" variant="outline-danger" onClick={handleLogout}>Logga ut</Button> :
             <Button className="shadow-none" variant="outline-secondary" onClick={_ => setShowLoginModal(true)} >Logga in</Button>}         
           </Navbar.Text>

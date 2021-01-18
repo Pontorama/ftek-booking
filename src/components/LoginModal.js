@@ -1,10 +1,10 @@
 import { useContext, useState } from 'react';
 import {Alert, Button, Form, Modal } from 'react-bootstrap';
-import SessionContext from '../context/SessionContext';
-
+import UserSessionContext from '../context/UserSessionContext';
+import Cookies from 'js-cookie';
 
 export default function LoginModal({showLoginModal, setShowLoginModal}) {
-  const { setSession } = useContext(SessionContext);
+  const { setUserSession } = useContext(UserSessionContext);
   const [loginError, setLoginError] = useState(false);
   
   function handleLogin(event) {
@@ -24,7 +24,7 @@ export default function LoginModal({showLoginModal, setShowLoginModal}) {
     })
     .then(res => {
       if (res.ok) {
-        setSession(true);
+        setUserSession(Cookies.getJSON('user'));
         setShowLoginModal(false);
       } else {
         setLoginError(true);
