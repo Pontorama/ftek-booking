@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
-import { Col, Container, Row, Button } from 'react-bootstrap';
+import { Col, Container, Row } from 'react-bootstrap';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
+import CreateReservationModal from '../components/CreateReservationModal';
+import ReservationInfoModal from '../components/ReservationInfoModal';
 
 export default function RoomView({ roomId }) {
   const [timeslots, setTimeslots] = useState([]);
@@ -30,12 +32,13 @@ export default function RoomView({ roomId }) {
   const activeDateTimeslots = timeslots.filter(timeslot => (timeslot.weekday === WEEKDAYS[activeDate.getDay()])); // Get timeslots for active date
   const activeDateReservations = reservations.filter(reservation => (new Date(reservation.date).getMonth() === activeDate.getMonth() && new Date(reservation.date).getDate() === activeDate.getDate())); // Get reservatopns for active date
     
-  // Generate buttons for each timeslot depenant on booked/free
+  // Generate buttons w/ modals for each timeslot dependant on booked/available
   const timeslotButtons = activeDateTimeslots.map(timeslot => {
-    const timeslotReservations = activeDateReservations.filter(reservation => (reservation.timeslot === timeslot.id));
-    return (timeslotReservations.length ? 
-      <Button variant="danger" block key={timeslot.id}>{`${timeslot.from.slice(0, 5)}-${timeslot.to.slice(0, 5)} ${timeslot.name}`}</Button> :
-      <Button variant="success" block key={timeslot.id}>{`${timeslot.from.slice(0, 5)}-${timeslot.to.slice(0, 5)} ${timeslot.name}`}</Button>)
+    const timeslotReservation = activeDateReservations.filter(reservation => (reservation.timeslot === timeslot.id))[0];
+    return (timeslotReservation ? 
+      <ReservationInfoModal timeslot={timeslot} reservation={timeslotReservation} /> :
+      <CreateReservationModal timeslot={timeslot} activeDate={activeDate} />
+    );
   });
 
   return (
@@ -50,7 +53,7 @@ export default function RoomView({ roomId }) {
         <Col>
           <Row>
             <Col>
-              <p className="h4">{`Tidsluckor för ${activeDate.toLocaleDateString()}`}</p>
+              <p className="h4">{`Tider för ${activeDate.toLocaleDateString()}`}</p>
             </Col>
           </Row>
           <Row>
