@@ -49,9 +49,30 @@ export default function Header() {
     </Modal>
   );
 
+  function handleSubmit(event) {
+    event.preventDefault();
+    const formData = {
+      email: event.target.email.value,
+      password: event.target.password.value
+    };
+    fetch('/login', {
+      method: 'POST',
+      cache: 'no-cache',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData)
+    })
+    .then(res => {
+      if (res.ok) {
+        
+      }
+    })
+  }
+
   const loginModal = (
     <Modal show={showLoginModal} onHide={_ => setShowLoginModal(false)}>
-      <Form action="/login" method="post">
+      <Form onSubmit={handleSubmit}>
         <Modal.Header closeButton>
           <Modal.Title>Logga in</Modal.Title>
         </Modal.Header>
