@@ -15,18 +15,17 @@ const {
 
 const router = express.Router();
 router.use(cookieParser());
-router.use(authenticateUser);
 
-router.get('/reservations/pending', getPendingReservations);
-router.patch('/reservations/:id/confirm', confirmReservation);
-router.patch('/reservations/:id/unconfirm', unconfirmReservation);
-router.delete('/reservations/:id', deleteReservation);
+router.get('/reservations/pending', authenticateUser, getPendingReservations);
+router.patch('/reservations/:id/confirm', authenticateUser, confirmReservation);
+router.patch('/reservations/:id/unconfirm', authenticateUser, unconfirmReservation);
+router.delete('/reservations/:id', authenticateUser, deleteReservation);
 
-router.post('/timeslots', createTimeslot);
-router.put('/timeslots/:id', updateTimeslot);
-router.delete('/timeslots/:id', deleteTimeslot);
+router.post('/timeslots', authenticateUser, createTimeslot);
+router.put('/timeslots/:id', authenticateUser, updateTimeslot);
+router.delete('/timeslots/:id', authenticateUser, deleteTimeslot);
 
-router.post('/timeslots/:id/inspection-times', createInspectionTime);
-router.delete('timeslots/:id/inspection-times/:time', deleteInspectionTime);
+router.post('/timeslots/:id/inspection-times', authenticateUser, createInspectionTime);
+router.delete('timeslots/:id/inspection-times/:time', authenticateUser, deleteInspectionTime);
 
 module.exports = router;

@@ -14,7 +14,9 @@ export default function Header() {
   const [showLoginModal, setShowLoginModal] = useState(false);
   
   function handleLogout() {
-    fetch('/logout')
+    fetch('/logout', {
+      method: 'DELETE'
+    })
     .then(_ => setSession(false));
   }
 

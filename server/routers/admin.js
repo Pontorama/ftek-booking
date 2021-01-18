@@ -5,10 +5,8 @@ const { authenticateUser, authenticateAdmin } = require('../controllers/auth');
 
 const router = express.Router();
 router.use(cookieParser());
-router.use(authenticateUser);
-router.use(authenticateAdmin);
 
-router.post('/users', createUser);
-router.delete('/users/:id', deleteUser);
+router.post('/users', authenticateUser, authenticateAdmin, createUser);
+router.delete('/users/:id', authenticateUser, authenticateAdmin, deleteUser);
 
 module.exports = router;
