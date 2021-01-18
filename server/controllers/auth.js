@@ -14,16 +14,20 @@ function loginUser(req, res, next) {
         if (!user)
           return res.status(403).send();
         bcrypt.compare(req.body.password, user.password,
-          (err, correct) => {
-            if (err)
-              return next(err);
-            else if (correct) {
-              const token = jwt.sign({
+          (err2, correctPassword) => {
+            if (err2)
+              return next(err2);
+            else if (correctPassword) {
+              const userObject = {
                 id: user.id,
                 isAdmin: user.isAdmin
-              }, process.env.APP_SECRET, { expiresIn: 300000});
-              res.cookie('auth', token,  { httpOnly: true, sameSite: 'Strict', secure: true }).send();
-            } else
+              };
+              const secureToken = jwt.sign(userObject, process.env.APP_SECRET, { expiresIn: 300000});
+              res.cookie('auth', secureToken,  { httpOnly: true, sameSite: 'Strict', secure: true });
+              res.cookie('user', JSON.stringify(userObject), { sameSite: 'Strict', secure: true });
+              res.send();
+            } 
+            else
               res.status(403).send();
           });
       }
@@ -32,6 +36,7 @@ function loginUser(req, res, next) {
 
 function logoutUser(req, res, next) {
   res.clearCookie('auth', { httpOnly: true, sameSite: 'Strict', secure: true });
+  res.clearCookie('user', { sameSite: 'Strict', secure: true });
   res.status(205).send();
 }
 
