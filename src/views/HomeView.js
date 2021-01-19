@@ -12,7 +12,7 @@ export default function HomeView() {
     .then(data => setRooms(data));
   }, []);
   
-  const roomTabs = rooms.map(room => <Tab key={room.id} eventKey={room.id} title={room.name}><RoomView roomId={room.id} /></Tab>);
+  const roomTabs = rooms.map(room => <Tab key={room.id} eventKey={room.id} title={room.name}><RoomView roomId={room.id} roomName={room.name} /></Tab>);
 
   return (
     <main>

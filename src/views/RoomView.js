@@ -5,7 +5,7 @@ import 'react-calendar/dist/Calendar.css';
 import CreateReservationModal from '../components/CreateReservationModal';
 import ReservationInfoModal from '../components/ReservationInfoModal';
 
-export default function RoomView({ roomId }) {
+export default function RoomView({ roomId, roomName }) {
   const [timeslots, setTimeslots] = useState([]);
   const [reservations, setReservations] = useState([]);
   const [activeDate, setActiveDate] = useState(new Date()); // react-calendar uses today as default active date
@@ -13,10 +13,18 @@ export default function RoomView({ roomId }) {
   const WEEKDAYS = [6, 0, 1, 2, 3, 4, 5]; // MYSQL orders 0-6 as Mon-Sun, JS as Sun-Wed, this is used to fix that
 
   useEffect(_ => {
-    fetch(`/rooms/${roomId}/timeslots`)
+    fetch(`/rooms/${roomId}/timeslots`) // Fetch timeslots for room
     .then(res => res.json())
-    .then(data => setTimeslots(data));
-    fetch(`/rooms/${roomId}/reservations?year=${new Date().getFullYear()}&month=${new Date().getMonth()+1}`)
+    .then(data => {
+      for (let i in data) {
+        fetch(`/timeslots/${data[i].id}/inspection-times`) // Fetch inspection times for timeslots
+        .then(res => res.json())
+        .then(data2 => (data[i].inspection_times = data2));
+      }
+      setTimeslots(data);
+    });
+
+    fetch(`/rooms/${roomId}/reservations?year=${new Date().getFullYear()}&month=${new Date().getMonth()+1}`) // Fetch intiial reservations
     .then(res => res.json())
     .then(data => setReservations(data));
   }, [roomId])
@@ -36,8 +44,8 @@ export default function RoomView({ roomId }) {
   const timeslotButtons = activeDateTimeslots.map(timeslot => {
     const timeslotReservation = activeDateReservations.filter(reservation => (reservation.timeslot === timeslot.id))[0];
     return (timeslotReservation ? 
-      <ReservationInfoModal timeslot={timeslot} reservation={timeslotReservation} /> :
-      <CreateReservationModal timeslot={timeslot} activeDate={activeDate} />
+      <ReservationInfoModal key={timeslot.id} timeslot={timeslot} reservation={timeslotReservation} /> :
+      <CreateReservationModal key={timeslot.id} timeslot={timeslot} roomName={roomName} activeDate={activeDate} />
     );
   });
 
@@ -53,7 +61,7 @@ export default function RoomView({ roomId }) {
         <Col>
           <Row>
             <Col>
-              <p className="h4">{`Tider för ${activeDate.toLocaleDateString()}`}</p>
+              <p className="h4">{`Bokningstider för ${roomName}, ${activeDate.toLocaleDateString()}`}</p>
             </Col>
           </Row>
           <Row>
