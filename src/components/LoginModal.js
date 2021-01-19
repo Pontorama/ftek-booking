@@ -60,12 +60,11 @@ export default function LoginModal() {
                 <Form.Label>Lösenord</Form.Label>
                 <Form.Control name="password" type="password" placeholder="Skriv in ditt lösenord" />
               </Form.Group>
-              {loginError && <Alert variant="danger">Kunde inte logga in, kontrollera användaruppgifterna och försök igen.</Alert>}
+              {loginError && <Alert variant="danger">Kunde inte logga in, var god kontrollera användaruppgifterna och försök igen.</Alert>}
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="primary" type="submit">
-              Logga in
-            </Button>
+            <Button variant="secondary" onClick={_ => setShowModal(false)}>Stäng</Button>
+            <Button variant="primary" type="submit">Logga in</Button>
           </Modal.Footer>
         </Form>
       </Modal>
