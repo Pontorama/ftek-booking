@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
+import '../css/calendar.css';
 import CreateReservationModal from '../components/CreateReservationModal';
 import ReservationInfoModal from '../components/ReservationInfoModal';
 
@@ -53,12 +54,12 @@ export default function RoomView({ roomId, roomName }) {
     <Container>
       <Row>
         <Col>
-          <Calendar 
+          <Calendar className="calendar"
             onClickDay={date => setActiveDate(date)}
             onActiveStartDateChange={handleActiveStartDateChange}
           />
         </Col>
-        <Col>
+        <Col className="mt-4 mt-md-0">
           <Row>
             <Col>
               <p className="h4">{`Bokningstider för ${roomName}, ${activeDate.toLocaleDateString()}`}</p>

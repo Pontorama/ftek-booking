@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
 import DashboardView from './views/DashboardView';
 import HomeView from './views/HomeView';
-import 'bootstrap/dist/css/bootstrap.css';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import UserSessionContext from './context/UserSessionContext';

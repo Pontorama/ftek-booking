@@ -17,7 +17,7 @@ export default function HomeView() {
   return (
     <main>
       <Container>
-        <Tabs className="mb-2">
+        <Tabs className="mb-3">
           {roomTabs}
         </Tabs>
       </Container>

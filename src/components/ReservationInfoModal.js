@@ -7,7 +7,7 @@ export default function ReservationInfoModal({ timeslot, reservation }) {
 
   return (
     <>
-      <Button variant="danger" block onClick={_ => setShowModal(true)}>{timeslotString}</Button>
+      <Button variant="lightcoral" block onClick={_ => setShowModal(true)}>{timeslotString}</Button>
       <Modal show={showModal} onHide={_ => setShowModal(false)}>
         <Modal.Header closeButton>
           <Modal.Title>Den valda tiden är redan bokad</Modal.Title>

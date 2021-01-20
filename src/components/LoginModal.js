@@ -64,7 +64,7 @@ export default function LoginModal() {
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={_ => setShowModal(false)}>Stäng</Button>
-            <Button variant="primary" type="submit">Logga in</Button>
+            <Button variant="lightblue" type="submit">Logga in</Button>
           </Modal.Footer>
         </Form>
       </Modal>

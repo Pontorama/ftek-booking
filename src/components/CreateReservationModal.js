@@ -39,7 +39,7 @@ export default function CreateReservationModal({ timeslot, activeDate, roomName 
 
   return (
     <>
-      <Button variant="primary" block onClick={_ => setShowSubmitModal(true)}>{timeslotString}</Button>
+      <Button variant="lightblue" block onClick={_ => setShowSubmitModal(true)}>{timeslotString}</Button>
       <Modal show={showSubmitModal} onHide={_ => setShowSubmitModal(false)}>
         <Form onSubmit={handleSubmit}>
           <Modal.Header closeButton>
@@ -79,7 +79,7 @@ export default function CreateReservationModal({ timeslot, activeDate, roomName 
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={_ => setShowSubmitModal(false)}>Stäng</Button>
-            <Button variant="primary" type="submit">Skicka</Button>
+            <Button variant="lightblue" type="submit">Skicka</Button>
           </Modal.Footer>
         </Form>
       </Modal>

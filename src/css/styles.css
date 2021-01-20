@@ -1,0 +1,20 @@
+.btn-lightblue {
+    background-color: #add8e6;
+    border-color: #add8e6;
+}
+
+.btn-lightblue:hover {
+    background-color: #9fc7d4;
+    border-color: #9fc7d4;
+}
+
+.btn-lightcoral {
+    background-color: #f08080;
+    border-color: #f08080;
+}
+
+.btn-lightcoral:hover {
+    background-color: #df7676;
+    border-color: #df7676;
+}
+

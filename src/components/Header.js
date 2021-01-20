@@ -12,7 +12,7 @@ export default function Header() {
 
   return (
     <header>
-      <Navbar bg="light" variant="light" className="mb-3">
+      <Navbar bg="light" variant="light" expand="md" className="mb-3">
         <Container>
           <Navbar.Brand>
             <img 
@@ -24,16 +24,19 @@ export default function Header() {
             />
             <span className="align-middle">Lokalbokning</span>
           </Navbar.Brand>
-          <Nav>
-            <HelpModal />
-            <RulesModal />
-            {userSession && <Nav.Link as={Link} to="/">Hem</Nav.Link>}
-            {userSession && <Nav.Link as={Link} to="/dashboard">Hantera bokningar</Nav.Link>}
-          </Nav>
-          <Navbar.Collapse className="justify-content-end" />
-          <Navbar.Text>
-            <LoginModal />  
-          </Navbar.Text>
+          <Navbar.Toggle aria-controls="navbar-collapse" />
+          <Navbar.Collapse iD="navbar-collapse">
+            <Nav>
+              <HelpModal />
+              <RulesModal />
+              {userSession && <Nav.Link as={Link} to="/">Hem</Nav.Link>}
+              {userSession && <Nav.Link as={Link} to="/dashboard">Hantera bokningar</Nav.Link>}
+            </Nav>
+            <Navbar.Collapse className="justify-content-end" />
+            <Navbar.Text>
+              <LoginModal />  
+            </Navbar.Text>
+          </Navbar.Collapse>
         </Container>
       </Navbar>
     </header>
