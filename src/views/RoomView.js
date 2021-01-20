@@ -54,7 +54,7 @@ export default function RoomView({ roomId, roomName }) {
     <Container>
       <Row>
         <Col>
-          <Calendar className="calendar"
+          <Calendar 
             onClickDay={date => setActiveDate(date)}
             onActiveStartDateChange={handleActiveStartDateChange}
           />
