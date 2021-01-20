@@ -6,7 +6,8 @@ export default function Footer() {
       <Container>
         <Row>
           <Col align="center">
-            &copy; Fysikteknologsektionen {new Date().getFullYear()}
+            <p>Utvecklat av: <a href="https://github.com/ECarlsson/" target="_blank" rel="noreferrer">Eric Carlsson</a></p>
+            <p>&copy; Fysikteknologsektionen {new Date().getFullYear()}</p>
           </Col>          
         </Row>
       </Container>

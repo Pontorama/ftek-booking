@@ -1,3 +1,16 @@
+:root, body, #root {
+    height: 100%;
+}
+
+#root {
+    display: flex;
+    flex-direction: column;
+}
+
+ main {
+     flex-grow: 1;
+ }
+
 .btn-lightblue {
     background-color: #add8e6;
     border-color: #add8e6;
