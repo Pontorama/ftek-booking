@@ -15,13 +15,15 @@ export default function Header() {
       <Navbar bg="light" variant="light" expand="md" className="mb-3">
         <Container>
           <Navbar.Brand>
-            <img 
-              src={ftekLogo}
-              alt=""
-              className="mr-3"
-              width="60"
-              height="60"
-            />
+            <a href="https://ftek.se/" target="_blank" rel="noreferrer">
+              <img
+                src={ftekLogo}
+                alt=""
+                className="mr-3"
+                width="60"
+                height="60"
+              />
+            </a>
             <span className="align-middle">Lokalbokning</span>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="navbar-collapse" />
