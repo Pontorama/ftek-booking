@@ -27,12 +27,12 @@ export default function Header() {
             <span className="align-middle">Lokalbokning</span>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="navbar-collapse" />
-          <Navbar.Collapse iD="navbar-collapse">
+          <Navbar.Collapse id="navbar-collapse">
             <Nav>
               <HelpModal />
               <RulesModal />
-              {userSession && <Nav.Link as={Link} to="/">Hem</Nav.Link>}
-              {userSession && <Nav.Link as={Link} to="/dashboard">Hantera bokningar</Nav.Link>}
+              {userSession && <Nav.Link as={Link} to="/manage-reservations">Bokningar</Nav.Link>}
+              {userSession && <Nav.Link as={Link} to="/settings">Inställningar</Nav.Link>}
             </Nav>
             <Navbar.Collapse className="justify-content-end" />
             <Navbar.Text>
