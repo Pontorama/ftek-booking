@@ -34,9 +34,11 @@ END$$
 
 CREATE PROCEDURE `get_pending_reservations` ()
 BEGIN
-    SELECT *
-    FROM `reservations`
-    WHERE `id` NOT IN (SELECT `reservation` FROM `confirmed_reservations`);
+    SELECT `reservations`.`id`, `timestamp`, `date`, `inspection_time`, `email`, `reservations`.`name`, `cid`, `society`, `description`, `from`, `to`, `timeslots`.`name` AS `timeslot`, `rooms`.`name` AS `room`
+    FROM `reservations`, `timeslots`, `rooms`
+    WHERE `reservations`.`timeslot`=`timeslots`.`id`
+    AND `timeslots`.`room`=`rooms`.`id`
+    AND `reservations`.`id` NOT IN (SELECT `reservation` FROM `confirmed_reservations`);
 END$$
 
 CREATE PROCEDURE `confirm_reservation` (

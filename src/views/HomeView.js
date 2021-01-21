@@ -1,9 +1,12 @@
 import { Tab } from 'bootstrap';
-import { useEffect, useState } from 'react';
-import { Container, Tabs } from 'react-bootstrap';
+import { useContext, useEffect, useState } from 'react';
+import { Col, Container, Row,Tabs } from 'react-bootstrap';
 import RoomView from './RoomView';
+import UserSessionContext from '../context/UserSessionContext';
+import PendingReservations from '../components/PendingReservations';
 
 export default function HomeView() {
+  const { userSession } = useContext(UserSessionContext);
   const [rooms, setRooms] = useState([]);
 
   useEffect(_=> {
@@ -17,9 +20,22 @@ export default function HomeView() {
   return (
     <main>
       <Container>
-        <Tabs className="mb-3">
-          {roomTabs}
-        </Tabs>
+        <Row>
+          <Col>
+            <Tabs className="mb-3">
+            {roomTabs}
+            </Tabs>
+          </Col>
+        </Row>
+        {userSession && 
+          <Container>
+            <Row className="mt-4">
+              <Col>
+                <PendingReservations />
+              </Col>
+            </Row>
+          </Container>
+        }
       </Container>
     </main>
   );
