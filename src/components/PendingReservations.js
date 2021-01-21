@@ -38,13 +38,11 @@ export default function PendingReservations() {
 
   return (
     <>
+      <p className="h4">Bokningsförfrågningar</p>
       {pendingReservations.length !== 0 ? (
-        <>
-          <p className="h4">Bokningsförfrågningar</p>
-          <Accordion>
-            {pendingReservationsListItems}
-          </Accordion>
-        </>
+        <Accordion>
+          {pendingReservationsListItems}
+        </Accordion>
       ) :
         <p>Inga nya bokningsförfrågningar!</p>
       }
