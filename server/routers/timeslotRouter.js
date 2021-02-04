@@ -12,7 +12,7 @@ router.get(
   '/timeslots/:roomId',
   param('roomId').isInt({ gt: 0 }),
   checkValidationResult,
-  timeslotController.getTimeslots
+  timeslotController.getTimeslotsByRoom
 );
 
 // Timeslot
@@ -20,8 +20,8 @@ router.post(
   '/timeslot',
   authController.checkUserIsAuthenticated,
   body('room').isInt({ gt: 0 }),
-  body('from').isDate(),
-  body('to').isDate(),
+  body('fromTIme').isDate(),
+  body('toTime').isDate(),
   body('weekday').isInt({ gt: -1, lt: 7 }),
   body('name').notEmpty(),
   checkValidationResult,
@@ -33,8 +33,8 @@ router.put(
   authController.checkUserIsAuthenticated,
   param('id').isInt({ gt: 0 }),
   body('room').isInt({ gt: 0 }),
-  body('from').isDate(),
-  body('to').isDate(),
+  body('fromTime').isDate(),
+  body('toTime').isDate(),
   body('weekday').isInt({ gt: -1, lt: 7 }),
   body('name').notEmpty(),
   checkValidationResult,

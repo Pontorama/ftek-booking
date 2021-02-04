@@ -26,23 +26,23 @@ END$$
 
 CREATE PROCEDURE `change_user_password` (
     IN `user_id` INT UNSIGNED,
-    IN `new_password` INT UNSIGNED
+    IN `user_password` INT UNSIGNED
 )
 BEGIN
     UPDATE `users`
-    SET `users`.`password`=`new_password`
+    SET `users`.`password`=`user_password`
     WHERE `users`.`id`=`user_id`;
 END$$
 
 CREATE PROCEDURE `update_user` (
     IN `user_id` INT UNSIGNED,
-    IN `new_email` VARCHAR(100),
-    IN `new_name` VARCHAR(50),
-    IN `new_isAdmin` BOOLEAN
+    IN `user_email` VARCHAR(100),
+    IN `user_name` VARCHAR(50),
+    IN `user_isAdmin` BOOLEAN
 )
 BEGIN
     UPDATE `users`
-    SET `users`.`email`=`new_email`, `users`.`name`=`new_name`, `users`.`isAdmin`=`new_isAdmin`
+    SET `users`.`email`=`user_email`, `users`.`name`=`user_name`, `users`.`isAdmin`=`user_isAdmin`
     WHERE `users`.`id`=`user_id`;
 END$$
 

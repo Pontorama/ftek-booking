@@ -1,8 +1,8 @@
 CREATE TABLE IF NOT EXISTS `timeslots` (
     `id` INT UNSIGNED AUTO_INCREMENT,
     `room` INT UNSIGNED,
-    `from` TIME NOT NULL,
-    `to` TIME NOT NULL,
+    `from_time` TIME NOT NULL,
+    `to_time` TIME NOT NULL,
     `weekday` TINYINT NOT NULL,
     `name` VARCHAR(100) NOT NULL,
     CHECK (`weekday` >= 0 AND `weekday` <= 6),
