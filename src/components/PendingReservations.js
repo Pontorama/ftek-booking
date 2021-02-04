@@ -24,7 +24,7 @@ export default function PendingReservations() {
           <item className="mt-3"><strong>Lokal: </strong>{reservation.room}</item>
           <item><strong>Datum: </strong>{new Date(reservation.date).toLocaleDateString()}</item>
           <item><strong>Tid: </strong>{`${reservation.from.slice(0, 5)}-${reservation.to.slice(0, 5)} ${reservation.timeslot}`}</item>
-          {reservation.inspection_time && <item><strong>Avsyningstid: </strong>{reservation.inspection_time.slice(0, 5)}</item>}
+          {reservation.inspectionTime && <item><strong>Avsyningstid: </strong>{reservation.inspectionTime.slice(0, 5)}</item>}
           <item className="mt-3"><strong>Namn: </strong>{reservation.name}</item>
           <item><strong>E-postadress: </strong>{reservation.email}</item>
           <item><strong>CID: </strong>{reservation.cid}</item>

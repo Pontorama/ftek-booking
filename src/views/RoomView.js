@@ -20,7 +20,7 @@ export default function RoomView({ roomId, roomName }) {
       for (let i in data) {
         fetch(`/timeslots/${data[i].id}/inspection-times`) // Fetch inspection times for timeslots
         .then(res => res.json())
-        .then(data2 => (data[i].inspection_times = data2));
+        .then(data2 => (data[i].inspectionTimes = data2));
       }
       setTimeslots(data);
     });

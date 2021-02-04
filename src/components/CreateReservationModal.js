@@ -18,7 +18,7 @@ export default function CreateReservationModal({ timeslot, activeDate, roomName 
       cid: event.target.cid.value,
       society: event.target.society.value.length ? event.target.society.value : null,
       description: event.target.description.value,
-      inspection_time: event.target.inspectionTime ? event.target.inspectionTime.value : null
+      inspectionTime: event.target.inspectionTime ? event.target.inspectionTime.value : null
     };
     fetch('/reservations', {
       method: 'POST',
@@ -67,12 +67,12 @@ export default function CreateReservationModal({ timeslot, activeDate, roomName 
               <Form.Label>Arrangemang</Form.Label>
               <Form.Control name="description" as="textarea" placeholder="Förklara vilket arrangemang du ska ha lokalen till" required />
             </Form.Group>
-            {(timeslot.inspection_times && timeslot.inspection_times.length !== 0) &&
+            {(timeslot.inspectionTimes && timeslot.inspectionTimes.length !== 0) &&
               <Form.Group controlId="createReservationFormInspectionTime">
                 <Form.Label>Avsyningstid</Form.Label>
                 <Form.Label className="text-muted">Välj när arrangemanget ska vara klart och lokalen redo för avsyning</Form.Label>
                 <Form.Control name="inspectionTime" as="select" required>
-                {timeslot.inspection_times.map(inspectionTime => <option key={inspectionTime.time} value={inspectionTime.time}>{inspectionTime.time.slice(0, 5)}</option>)}
+                {timeslot.inspectionTimes.map(inspectionTime => <option key={inspectionTime.time} value={inspectionTime.time}>{inspectionTime.time.slice(0, 5)}</option>)}
                 </Form.Control>
               </Form.Group>}
               {submitError && <Alert variant="danger">Kunde inte skicka bokningsförfrågan, var god försök igen.</Alert>}
