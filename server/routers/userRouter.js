@@ -36,7 +36,7 @@ router.post(
   authController.checkUserIsAdmin,
   body('email').isEmail(),
   body('name').notEmpty(),
-  body('admin').isBoolean(),
+  body('isAdmin').isBoolean(),
   checkValidationResult,
   userController.createUser
 );
@@ -46,6 +46,9 @@ router.put(
   authController.checkUserIsAuthenticated,
   authController.checkUserIsAdmin,
   param('id').isInt({ gt: 0 }),
+  body('email').isEmail(),
+  body('name').notEmpty(),
+  body('isAdmin').isBoolean(),
   checkValidationResult,
   userController.updateUser
 );

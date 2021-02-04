@@ -15,7 +15,7 @@ const createUser = async (req, res, next) => {
 
 const changePassword = async (user, password) => {
   const hash = await bcrypt.hash(password, 10);
-  await db.query('CALL change_password_for_user(?, ?)', [user, hash]);
+  await db.query('CALL change_user_password(?, ?)', [user, hash]);
 };
 
 const updateUserPassword = async (req, res, next) => {
@@ -30,8 +30,8 @@ const updateUserPassword = async (req, res, next) => {
 const updateUser = async (req, res, next) => {
   try {
     if (req.body.password)
-      changePassword(req.body.email, req.body.password);
-    await db.query('CALL update_user(?, ?, ?)', [req.body.email, req.body.name, req.body.admin]);
+      changePassword(req.params.id, req.body.password);
+    await db.query('CALL update_user(?, ?, ?, ?)', [req.params.id, req.body.email, req.body.name, req.body.isAdmin]);
     res.status(204).send();
   } catch (error) {
     next(error);
