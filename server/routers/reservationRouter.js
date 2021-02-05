@@ -14,7 +14,7 @@ router.get(
   param('year').isInt({ gt: 0 }),
   param('month').isInt({ gt: 0 }),
   checkValidationResult,
-  reservationController.getConfirmedReservationsForRoomAndMonth
+  reservationController.getConfirmedReservationsByRoomAndMonth
 );
 
 router.get(

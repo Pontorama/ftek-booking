@@ -1,9 +1,9 @@
 const db = require('../db');
 
-const getConfirmedReservationsForRoomAndMonth = async (req, res, next) => {
+const getConfirmedReservationsByRoomAndMonth = async (req, res, next) => {
   try {
-    const reservations = await db.query('CALL get_confirmed_reservations_for_room_and_month(?, ?, ?)', [req.query.room, req.query.year, req.query.month]);
-    res.json(rows[0]);
+    const reservations = await db.query('CALL get_confirmed_reservations_by_room_and_month(?, ?, ?)', [req.query.room, req.query.year, req.query.month]);
+    res.json(reservations[0]);
   } catch (error) {
     next(error);
   }
@@ -85,7 +85,7 @@ const deleteReservation = async (req, res, next) => {
 };
 
 module.exports = {
-  getConfirmedReservationsForRoomAndMonth,
+  getConfirmedReservationsByRoomAndMonth,
   getConfirmedReservations,
   getPendingReservations,
   getDeniedReservations,

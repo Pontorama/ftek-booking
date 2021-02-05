@@ -19,3 +19,9 @@ CREATE TABLE IF NOT EXISTS `confirmed_reservations` (
     PRIMARY KEY (`reservation`),
     CONSTRAINT `confirmed_reservation` FOREIGN KEY (`reservation`) REFERENCES `reservations`(`id`) ON DELETE CASCADE
 );
+
+CREATE TABLE IF NOT EXISTS `denied_reservations` (
+    `reservation` BIGINT UNSIGNED,
+    PRIMARY KEY (`reservation`),
+    CONSTRAINT `denied_reservation` FOREIGN KEY (`reservation`) REFERENCES `reservations`(`id`) ON DELETE CASCADE
+);
