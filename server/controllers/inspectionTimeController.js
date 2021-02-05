@@ -2,8 +2,8 @@ const db = require('../db');
 
 const getInspectionTimes = async (req, res, next) => {
   try {
-    const rows = await db.query('CALL get_inspection_times(?)', [req.params.timeslot]);
-    res.json(rows[0]);
+    const inspectionTimes = await db.query('CALL get_inspection_times(?)', [req.params.timeslot]);
+    res.json(inspectionTimes[0]);
   } catch (error) {
     next(error);
   }
