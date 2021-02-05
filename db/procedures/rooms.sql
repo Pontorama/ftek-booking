@@ -1,28 +1,6 @@
-CREATE PROCEDURE `create_room` (
-    IN `p_name` VARCHAR(100)
-)
-BEGIN
-    INSERT INTO `rooms`(`name`) VALUES (`p_name`);
-END$$
-
-CREATE PROCEDURE `delete_room` (
-    IN `p_id` INT UNSIGNED
-)
-BEGIN
-    DELETE FROM `rooms` WHERE `id`=`p_id`;
-END$$
-
 CREATE PROCEDURE `get_rooms` ()
 BEGIN
     SELECT `id`, `name` FROM `rooms`;
-END$$
-
-CREATE PROCEDURE `add_room_manager` (
-    IN `room_id` INT UNSIGNED,
-    IN `user_id` INT UNSIGNED
-)
-BEGIN
-    UPDATE `rooms` SET `manager`=`user_id` WHERE `id`=`room_id`;
 END$$
 
 CREATE PROCEDURE `get_room_manager` (
@@ -30,4 +8,31 @@ CREATE PROCEDURE `get_room_manager` (
 )
 BEGIN 
     SELECT `manager` FROM `rooms` WHERE `id`=`room_id`;
+END$$
+
+CREATE PROCEDURE `create_room` (
+    IN `room_name` VARCHAR(100),
+    IN `room_manager` INT UNSIGNED
+)
+BEGIN
+    INSERT INTO `rooms`(`name`) VALUES (`room_name`);
+END$$
+
+CREATE PROCEDURE `update_room` (
+    `room_id` INT UNSIGNED,
+    `room_name` VARCHAR(100),
+    `room_manager` INT UNSIGNED
+)
+BEGIN
+    UPDATE `rooms`
+    SET `rooms`.`name`=`room_name`, `rooms`.`manager`=`room_manager`
+    WHERE `rooms`.`id`=`room_id`;
+END$$
+
+CREATE PROCEDURE `delete_room` (
+    IN `room_id` INT UNSIGNED
+)
+BEGIN
+    DELETE FROM `rooms`
+    WHERE `rooms`.`id`=`room_id`;
 END$$
