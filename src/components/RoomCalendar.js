@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
@@ -13,10 +13,11 @@ const RoomCalendar = ({ roomId, roomName }) => {
 
   const WEEKDAYS = [6, 0, 1, 2, 3, 4, 5]; // MYSQL orders 0-6 as Mon-Sun, JS as Sun-Wed, this is used to fix that
 
-  const fetchReservations = async (year, month) => {
+  // Wrapped in memo so that useEffect is not called repeatedly
+  const fetchReservations = useCallback(async (year, month) => {
     const res = await fetch(`/rooms/${roomId}/reservations?year=${year}&month=${month}`);
     setReservations(res.json());
-  };
+  }, [roomId]);
 
   useEffect(() => {
     const fetchTimeslots = async () => {
@@ -30,7 +31,7 @@ const RoomCalendar = ({ roomId, roomName }) => {
     };
     fetchTimeslots();
     fetchReservations(new Date().getFullYear(), new Date().getMonth()+1); // Fetch initial reservations
-  }, [roomId]);
+  }, [roomId, fetchReservations]);
 
   const handleActiveStartDateChange = ({ activeStartDate, view }) => {
     if (view === 'month')
