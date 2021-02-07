@@ -1,29 +1,30 @@
-import { useState } from 'react';
 import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
 import HomeView from './views/HomeView';
-import Header from './components/Header';
-import Footer from './components/Footer';
-import UserSessionContext from './context/UserSessionContext';
-import Cookies from 'js-cookie';
 import SettingsView from './views/SettingsView';
 import ReservationsView from './views/ReservationsView';
+import ErrorHandler from './utils/ErrorHandler';
+import RestrictedRoute from './utils/RestrictedRoute';
+import UserSessionContextProvider from './utils/UserSessionContextProvider';
+import Header from './components/Header';
+import Footer from './components/Footer';
 
-function App() {
-  const [userSession, setUserSession] = useState(Cookies.getJSON('user'));
+ const App = () => {
   return (
-    <UserSessionContext.Provider value={{userSession, setUserSession}}>
+    <ErrorHandler>
+    <UserSessionContextProvider>
       <Router basename="/">
         <Header />
         <Switch>
-          <Route path="/manage-reservations" component={_ => (userSession ? <ReservationsView /> : <Redirect to="/" />)} />
-          <Route path="/settings" component={_ => (userSession ? <SettingsView /> : <Redirect to="/" />)} />
+          <RestrictedRoute path="/reservations" component={ReservationsView} />
+          <RestrictedRoute path="/settings" component={SettingsView} />
           <Route exact path="/" component={HomeView} />
-          <Route path="/" component={_ => <Redirect to="/" />} />
+          <Route path="/" component={() => <Redirect to="/" />} />
         </Switch>
         <Footer />
       </Router>
-    </UserSessionContext.Provider>
+    </UserSessionContextProvider>
+    </ErrorHandler>
   );
-}
+};
 
 export default App;
