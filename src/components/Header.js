@@ -1,13 +1,13 @@
 import { useContext } from 'react';
 import { Container, Nav, Navbar } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import UserSessionContext from '../context/UserSessionContext';
+import UserSessionContext from '../utils/UserSessionContext';
 import ftekLogo from '../img/ftek.svg';
 import HelpModal from './HelpModal';
 import LoginModal from './LoginModal';
 import RulesModal from './RulesModal';
 
-export default function Header() {
+const Header = () => {
   const { userSession } = useContext(UserSessionContext);
 
   return (
@@ -31,7 +31,7 @@ export default function Header() {
             <Nav>
               <HelpModal />
               <RulesModal />
-              {userSession && <Nav.Link as={Link} to="/manage-reservations">Bokningar</Nav.Link>}
+              {userSession && <Nav.Link as={Link} to="/reservations">Bokningar</Nav.Link>}
               {userSession && <Nav.Link as={Link} to="/settings">Inställningar</Nav.Link>}
             </Nav>
             <Navbar.Collapse className="justify-content-end" />
@@ -43,4 +43,6 @@ export default function Header() {
       </Navbar>
     </header>
   );
-}
+};
+
+export default Header;

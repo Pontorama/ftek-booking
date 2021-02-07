@@ -6,44 +6,50 @@ import '../css/calendar.css';
 import CreateReservationModal from '../components/CreateReservationModal';
 import ReservationInfoModal from '../components/ReservationInfoModal';
 
-export default function RoomCalendar({ roomId, roomName }) {
+const RoomCalendar = ({ roomId, roomName }) => {
   const [timeslots, setTimeslots] = useState([]);
   const [reservations, setReservations] = useState([]);
   const [activeDate, setActiveDate] = useState(new Date()); // react-calendar uses today as default active date
 
   const WEEKDAYS = [6, 0, 1, 2, 3, 4, 5]; // MYSQL orders 0-6 as Mon-Sun, JS as Sun-Wed, this is used to fix that
 
-  useEffect(_ => {
-    fetch(`/rooms/${roomId}/timeslots`) // Fetch timeslots for room
-    .then(res => res.json())
-    .then(data => {
-      for (let i in data) {
-        fetch(`/timeslots/${data[i].id}/inspection-times`) // Fetch inspection times for timeslots
-        .then(res => res.json())
-        .then(data2 => (data[i].inspectionTimes = data2));
+  const fetchReservations = async (year, month) => {
+    const res = await fetch(`/rooms/${roomId}/reservations?year=${year}&month=${month}`);
+    setReservations(res.json());
+  };
+
+  useEffect(() => {
+    const fetchTimeslots = async () => {
+      const res = await fetch(`/rooms/${roomId}/timeslots`);
+      const timeslots = res.json();
+      for (let i in timeslots) {
+        const res = await fetch(`/timeslots/${timeslots[i].id}/inspection-times`);
+        timeslots[i].inspectionTimes = res.json();
       }
-      setTimeslots(data);
-    });
+      setTimeslots(timeslots);
+    };
+    fetchTimeslots();
+    fetchReservations(new Date().getFullYear(), new Date().getMonth()+1); // Fetch initial reservations
+  }, [roomId]);
 
-    fetch(`/rooms/${roomId}/reservations?year=${new Date().getFullYear()}&month=${new Date().getMonth()+1}`) // Fetch intiial reservations
-    .then(res => res.json())
-    .then(data => setReservations(data));
-  }, [roomId])
+  const handleActiveStartDateChange = ({ activeStartDate, view }) => {
+    if (view === 'month')
+      fetchReservations(activeStartDate.getFullYear(), activeStartDate.getMonth()+1);
+  };
 
-  function handleActiveStartDateChange({ activeStartDate, view }) {
-    if (view === 'month') {
-      fetch(`/rooms/${roomId}/reservations?year=${activeStartDate.getFullYear()}&month=${activeStartDate.getMonth()+1}`)
-      .then(res => res.json())
-      .then(data => setReservations(data));
-    }
-  }
+  // Get timeslots for active date
+  const activeDateTimeslots = timeslots.filter((timeslot) => (
+    timeslot.weekday === WEEKDAYS[activeDate.getDay()]
+  )); 
 
-  const activeDateTimeslots = timeslots.filter(timeslot => (timeslot.weekday === WEEKDAYS[activeDate.getDay()])); // Get timeslots for active date
-  const activeDateReservations = reservations.filter(reservation => (new Date(reservation.date).getMonth() === activeDate.getMonth() && new Date(reservation.date).getDate() === activeDate.getDate())); // Get reservatopns for active date
+  // Get reservations for active date
+  const activeDateReservations = reservations.filter((reservation) => (
+    new Date(reservation.date).getMonth() === activeDate.getMonth() && new Date(reservation.date).getDate() === activeDate.getDate()
+  ));
     
-  // Generate buttons w/ modals for each timeslot dependant on booked/available
-  const timeslotButtons = activeDateTimeslots.map(timeslot => {
-    const timeslotReservation = activeDateReservations.filter(reservation => (reservation.timeslot === timeslot.id))[0];
+  const timeslotButtons = activeDateTimeslots.map((timeslot) => {
+    // Get potential reservation for timeslot
+    const timeslotReservation = activeDateReservations.filter((reservation) => (reservation.timeslot === timeslot.id))[0];
     return (timeslotReservation ? 
       <ReservationInfoModal key={timeslot.id} timeslot={timeslot} reservation={timeslotReservation} /> :
       <CreateReservationModal key={timeslot.id} timeslot={timeslot} roomName={roomName} activeDate={activeDate} />
@@ -55,7 +61,7 @@ export default function RoomCalendar({ roomId, roomName }) {
       <Row>
         <Col>
           <Calendar 
-            onClickDay={date => setActiveDate(date)}
+            onClickDay={(date) => setActiveDate(date)}
             onActiveStartDateChange={handleActiveStartDateChange}
           />
         </Col>
@@ -74,4 +80,6 @@ export default function RoomCalendar({ roomId, roomName }) {
       </Row>
     </Container>
   );
-}
+};
+
+export default RoomCalendar;

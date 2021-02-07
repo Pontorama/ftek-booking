@@ -1,7 +1,7 @@
 import { Container, Col, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
-export default function SettingsView() {
+const SettingsView = () => {
   return (
     <main>
       <Container>
@@ -18,4 +18,6 @@ export default function SettingsView() {
       </Container>
     </main>
   );
-}
+};
+
+export default SettingsView;

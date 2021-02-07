@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { Alert, Button, Form, Modal } from 'react-bootstrap';
 
-export default function CreateReservationModal({ timeslot, activeDate, roomName }) {
+const CreateReservationModal = ({ timeslot, activeDate, roomName }) => {
   const [showSubmitModal, setShowSubmitModal] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [submitError, setSubmitError] = useState(false);
   const timeslotString = `${timeslot.from.slice(0, 5)}-${timeslot.to.slice(0, 5)} ${timeslot.name}`;
 
-  function handleSubmit(event) {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     setSubmitError(false);
     const formData = {
@@ -20,27 +20,28 @@ export default function CreateReservationModal({ timeslot, activeDate, roomName 
       description: event.target.description.value,
       inspectionTime: event.target.inspectionTime ? event.target.inspectionTime.value : null
     };
-    fetch('/reservations', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(formData)
-    })
-    .then(res => {
-      if (res.ok) {
-        setShowSubmitModal(false);
-        setShowSuccessModal(true);
-      } else {
-        setSubmitError(true);
+    const res = await fetch(
+      '/reservations',
+      {
+        method: 'POST',
+        headers : {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
       }
-    })
-  }
+    );
+    if (res.ok) {
+      setShowSubmitModal(false);
+      setShowSuccessModal(true);
+    } else {
+      setSubmitError(true);
+    }
+  };
 
   return (
     <>
-      <Button variant="lightblue" block onClick={_ => setShowSubmitModal(true)}>{timeslotString}</Button>
-      <Modal show={showSubmitModal} onHide={_ => setShowSubmitModal(false)}>
+      <Button variant="lightblue" block onClick={() => setShowSubmitModal(true)}>{timeslotString}</Button>
+      <Modal show={showSubmitModal} onHide={() => setShowSubmitModal(false)}>
         <Form onSubmit={handleSubmit}>
           <Modal.Header closeButton>
             <Modal.Title>Boka lokal</Modal.Title>
@@ -72,18 +73,18 @@ export default function CreateReservationModal({ timeslot, activeDate, roomName 
                 <Form.Label>Avsyningstid</Form.Label>
                 <Form.Label className="text-muted">Välj när arrangemanget ska vara klart och lokalen redo för avsyning</Form.Label>
                 <Form.Control name="inspectionTime" as="select" required>
-                {timeslot.inspectionTimes.map(inspectionTime => <option key={inspectionTime.time} value={inspectionTime.time}>{inspectionTime.time.slice(0, 5)}</option>)}
+                {timeslot.inspectionTimes.map((inspectionTime) => <option key={inspectionTime.time} value={inspectionTime.time}>{inspectionTime.time.slice(0, 5)}</option>)}
                 </Form.Control>
               </Form.Group>}
               {submitError && <Alert variant="danger">Kunde inte skicka bokningsförfrågan, var god försök igen.</Alert>}
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={_ => setShowSubmitModal(false)}>Stäng</Button>
+            <Button variant="secondary" onClick={() => setShowSubmitModal(false)}>Stäng</Button>
             <Button variant="lightblue" type="submit">Skicka</Button>
           </Modal.Footer>
         </Form>
       </Modal>
-      <Modal show={showSuccessModal} onHide={_ => setShowSuccessModal(false)}>
+      <Modal show={showSuccessModal} onHide={() => setShowSuccessModal(false)}>
         <Modal.Header closeButton>
           Bokningsförfrågan skickad!
         </Modal.Header>
@@ -91,9 +92,11 @@ export default function CreateReservationModal({ timeslot, activeDate, roomName 
           En bekräftelse på bokningsförfrågan skickas till den angivna e-postadressen. Du får ett till e-postmeddelande när din bokningsförfrågan har blivit behandlad.
         </Modal.Body>
          <Modal.Footer>
-          <Button variant="secondary" onClick={_ => setShowSuccessModal(false)}>Stäng</Button>
+          <Button variant="secondary" onClick={() => setShowSuccessModal(false)}>Stäng</Button>
          </Modal.Footer>
       </Modal>
     </>
   );
-}
+};
+
+export default CreateReservationModal;

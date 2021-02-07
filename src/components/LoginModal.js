@@ -1,51 +1,51 @@
 import { useContext, useState } from 'react';
 import {Alert, Button, Form, Modal } from 'react-bootstrap';
-import UserSessionContext from '../context/UserSessionContext';
+import UserSessionContext from '../utils/UserSessionContext';
 import Cookies from 'js-cookie';
 
-export default function LoginModal() {
+const LoginModal = () => {
   const { userSession, setUserSession } = useContext(UserSessionContext);
   const [showModal, setShowModal] = useState(false);
   const [loginError, setLoginError] = useState(false);
   
-  function handleLogin(event) {
+  const handleLogin = async (event) => {
     event.preventDefault();
     setLoginError(false);
     const formData = {
       email: event.target.email.value,
       password: event.target.password.value
     };
-    fetch('/login', {
-      method: 'POST',
-      cache: 'no-cache',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(formData)
-    })
-    .then(res => {
-      if (res.ok) {
-        setUserSession(Cookies.getJSON('user'));
-        setShowModal(false);
-      } else {
-        setLoginError(true);
+    const res = await fetch(
+      '/login',
+      {
+        method: 'POST',
+        cache: 'no-cache',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
       }
-    })
-  }
+    );
+    if (res.ok) {
+      setUserSession(Cookies.getJSON('user'));
+      setShowModal(false);
+    } else {
+      setLoginError(true);
+    }
+  };
 
-  function handleLogout() {
-    fetch('/logout', {
-      method: 'DELETE'
-    })
-    .then(_ => setUserSession(null));
-  }
+  const handleLogout = async () => {
+    await fetch('/logout', { method: 'DELETE' });
+    setUserSession(null);
+  };
 
   return (
     <>
       {userSession ? 
         <Button className="shadow-none" variant="outline-danger" onClick={handleLogout}>Logga ut</Button> :
-        <Button className="shadow-none" variant="outline-secondary" onClick={_ => setShowModal(true)} >Logga in</Button>}       
-      <Modal show={showModal} onHide={_ => setShowModal(false)}>
+        <Button className="shadow-none" variant="outline-secondary" onClick={() => setShowModal(true)} >Logga in</Button>
+      }       
+      <Modal show={showModal} onHide={() => setShowModal(false)}>
         <Form onSubmit={handleLogin}>
           <Modal.Header closeButton>
             <Modal.Title>Logga in</Modal.Title>
@@ -63,11 +63,13 @@ export default function LoginModal() {
               {loginError && <Alert variant="danger">Kunde inte logga in, var god kontrollera användaruppgifterna och försök igen.</Alert>}
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={_ => setShowModal(false)}>Stäng</Button>
+            <Button variant="secondary" onClick={() => setShowModal(false)}>Stäng</Button>
             <Button variant="lightblue" type="submit">Logga in</Button>
           </Modal.Footer>
         </Form>
       </Modal>
     </>
   );
-}
+};
+
+export default LoginModal;

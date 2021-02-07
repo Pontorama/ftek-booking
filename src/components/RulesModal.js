@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { Button, Modal, Nav } from 'react-bootstrap';
 
-export default function RulesModal() {
+const RulesModal = () => {
   const [showModal, setShowModal] = useState(false);
 
   return (
     <>
-      <Nav.Link onClick={_ => setShowModal(true)}>Bokningsregler</Nav.Link>
-      <Modal show={showModal} onHide={_ => setShowModal(false)}>
+      <Nav.Link onClick={() => setShowModal(true)}>Bokningsregler</Nav.Link>
+      <Modal show={showModal} onHide={() => setShowModal(false)}>
         <Modal.Header closeButton>
           <Modal.Title>Bokningsregler</Modal.Title>
         </Modal.Header>
@@ -22,9 +22,11 @@ export default function RulesModal() {
           </ul>
         </Modal.Body>
         <Modal.Footer>
-        <Button variant="secondary" onClick={_ => setShowModal(false)}>Stäng</Button>
+        <Button variant="secondary" onClick={() => setShowModal(false)}>Stäng</Button>
         </Modal.Footer>
       </Modal>
     </>
   );
-}
+};
+
+export default RulesModal;
