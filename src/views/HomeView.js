@@ -27,15 +27,6 @@ export default function HomeView() {
             </Tabs>
           </Col>
         </Row>
-        {userSession && 
-          <Container>
-            <Row className="mt-4">
-              <Col>
-                <PendingReservations />
-              </Col>
-            </Row>
-          </Container>
-        }
       </Container>
     </main>
   );
