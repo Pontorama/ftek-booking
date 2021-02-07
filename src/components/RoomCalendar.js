@@ -6,7 +6,7 @@ import '../css/calendar.css';
 import CreateReservationModal from '../components/CreateReservationModal';
 import ReservationInfoModal from '../components/ReservationInfoModal';
 
-export default function RoomView({ roomId, roomName }) {
+export default function RoomCalendar({ roomId, roomName }) {
   const [timeslots, setTimeslots] = useState([]);
   const [reservations, setReservations] = useState([]);
   const [activeDate, setActiveDate] = useState(new Date()); // react-calendar uses today as default active date
