@@ -15,16 +15,16 @@ const RoomCalendar = ({ roomId, roomName }) => {
 
   // Wrapped in memo so that useEffect is not called repeatedly
   const fetchReservations = useCallback(async (year, month) => {
-    const res = await fetch(`/rooms/${roomId}/reservations?year=${year}&month=${month}`);
+    const res = await fetch(`/api/reservations/confirmed/${roomId}/${year}/${month}`);
     setReservations(res.json());
   }, [roomId]);
 
   useEffect(() => {
     const fetchTimeslots = async () => {
-      const res = await fetch(`/rooms/${roomId}/timeslots`);
+      const res = await fetch(`/api/timeslots/${roomId}`);
       const timeslots = res.json();
       for (let i in timeslots) {
-        const res = await fetch(`/timeslots/${timeslots[i].id}/inspection-times`);
+        const res = await fetch(`/api/inspection-times/${timeslots[i].id}`);
         timeslots[i].inspectionTimes = res.json();
       }
       setTimeslots(timeslots);

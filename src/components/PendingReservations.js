@@ -6,7 +6,7 @@ const PendingReservations = () => {
 
   useEffect(() => {
     const fetchPendingReservations = async () => {
-      const res = await fetch('/reservations/pending');
+      const res = await fetch(`/api/reservations/pending/${new Date()}`);
       setPendingReservations(res.json());
     };
     fetchPendingReservations();

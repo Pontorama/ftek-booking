@@ -21,7 +21,7 @@ const CreateReservationModal = ({ timeslot, activeDate, roomName }) => {
       inspectionTime: event.target.inspectionTime ? event.target.inspectionTime.value : null
     };
     const res = await fetch(
-      '/reservations',
+      '/reservation',
       {
         method: 'POST',
         headers : {
