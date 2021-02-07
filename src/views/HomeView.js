@@ -1,21 +1,18 @@
 import { Tab } from 'bootstrap';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Col, Container, Row,Tabs } from 'react-bootstrap';
-import RoomView from './RoomView';
-import UserSessionContext from '../context/UserSessionContext';
-import PendingReservations from '../components/PendingReservations';
+import RoomCalendar from '../components/RoomCalendar';
 
 export default function HomeView() {
-  const { userSession } = useContext(UserSessionContext);
   const [rooms, setRooms] = useState([]);
 
-  useEffect(_=> {
+  useEffect(_ => {
     fetch('/rooms')
     .then(res => res.json())
     .then(data => setRooms(data));
   }, []);
   
-  const roomTabs = rooms.map(room => <Tab key={room.id} eventKey={room.id} title={room.name}><RoomView roomId={room.id} roomName={room.name} /></Tab>);
+  const roomTabs = rooms.map(room => <Tab key={room.id} eventKey={room.id} title={room.name}><RoomCalendar roomId={room.id} roomName={room.name} /></Tab>);
 
   return (
     <main>
