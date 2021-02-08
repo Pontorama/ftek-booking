@@ -1,6 +1,7 @@
 CREATE PROCEDURE `get_inspection_times` (
     IN `inspection_time_timeslot` INT UNSIGNED
 )
+READS SQL DATA
 BEGIN
     SELECT `time`
     FROM `inspection_times`
@@ -11,6 +12,7 @@ CREATE PROCEDURE `create_inspection_time` (
     IN `inspection_time_time` TIME,
     IN `inspection_time_timeslot` INT UNSIGNED
 )
+MODIFIES SQL DATA
 BEGIN
     INSERT INTO `inspection_times`(`time`, `timeslot`) 
     VALUES (`inspection_time_time`, `inspection_time_timeslot`);
@@ -20,6 +22,7 @@ CREATE PROCEDURE `delete_inspection_time` (
     IN `inspection_time_time` TIME,
     IN `inspection_time_timeslot` INT UNSIGNED
 )
+MODIFIES SQL DATA
 BEGIN
     DELETE FROM `timeslots`
     WHERE `time`=`inspection_time_time`
