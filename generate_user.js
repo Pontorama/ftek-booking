@@ -8,16 +8,10 @@ const user = {
   password: 'test'
 };
 
-bcrypt.hash(user.password, 10,
-  (err, hash) => {
-    if (err)
-      return console.error(err);
-    db.query('CALL create_user(?, ?, ?, ?)',
-      [user.email, user.name, user.admin, hash],
-      err => {
-        if (err)
-          return console.error(err);
-        else
-          console.log('Ok!');
-      });
-  });
+const generateUser = async () => {
+ const hash = await bcrypt.hash(user.password, 10);
+ await db.query('CALL create_user(?, ?, ?, ?)', [user.email, user.name, user.admin, hash]);
+ console.log('Ok!');
+};
+
+generateUser();

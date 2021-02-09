@@ -1,3 +1,5 @@
+const jwt = require('jsonwebtoken');
+
 const checkUserIsAuthenticated = async (req, res, next) => {
   try {
     const data = await jwt.verify(req.cookies.auth, process.env.APP_SECRET);

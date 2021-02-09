@@ -2,7 +2,7 @@ const db = require('../db');
 
 const getTimeslotsByRoom = async (req, res, next) => {
   try {
-    const rows = await db.query('CALL get_timeslots_by_room(?)', [req.params.room]);
+    const [rows, fields] = await db.query('CALL get_timeslots_by_room(?)', [req.params.room]);
     res.json(rows[0]);
   } catch (error) {
     next(error);

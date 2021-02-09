@@ -16,7 +16,7 @@ const LoginModal = () => {
       password: event.target.password.value
     };
     const res = await fetch(
-      '/login',
+      '/api/login',
       {
         method: 'POST',
         cache: 'no-cache',
@@ -35,7 +35,7 @@ const LoginModal = () => {
   };
 
   const handleLogout = async () => {
-    await fetch('/logout', { method: 'DELETE' });
+    await fetch('/api/logout', { method: 'DELETE' });
     setUserSession(null);
   };
 
@@ -63,7 +63,7 @@ const LoginModal = () => {
               {loginError && <Alert variant="danger">Kunde inte logga in, var god kontrollera användaruppgifterna och försök igen.</Alert>}
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={() => setShowModal(false)}>Stäng</Button>
+            <Button variant="lightgrey" onClick={() => setShowModal(false)}>Stäng</Button>
             <Button variant="lightblue" type="submit">Logga in</Button>
           </Modal.Footer>
         </Form>

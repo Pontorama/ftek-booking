@@ -3,7 +3,7 @@ CREATE PROCEDURE `get_timeslots_by_room` (
 )
 READS SQL DATA
 BEGIN
-    SELECT `id`, `from_time`, `to_time`, `weekday`, `name`
+    SELECT `id`, `from_time` AS `fromTime`, `to_time` AS `toTime`, `weekday`, `name`
     FROM  `timeslots`
     WHERE `room`=`room_id`;
 END$$

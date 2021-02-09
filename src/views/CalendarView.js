@@ -1,22 +1,22 @@
-import { Tab } from 'bootstrap';
 import { useEffect, useState } from 'react';
-import { Col, Container, Row,Tabs } from 'react-bootstrap';
-import RoomCalendar from '../components/RoomCalendar';
+import { Col, Container, Row, Tab, Tabs } from 'react-bootstrap';
+import RoomTab from '../components/RoomTab';
 
-const HomeView = () => {
+const CalendarView = () => {
   const [rooms, setRooms] = useState([]);
 
   useEffect(() => {
     const fetchRooms = async () => {
       const res = await fetch('/api/rooms');
-      setRooms(res.json());
+      const data = await res.json();
+      setRooms(data);
     };
    fetchRooms();
   }, []);
 
   const roomTabs = rooms.map((room) => (
     <Tab key={room.id} eventKey={room.id} title={room.name}>
-      <RoomCalendar roomId={room.id} roomName={room.name} />
+      <RoomTab room={room} />
     </Tab>
   ));
 
@@ -26,7 +26,7 @@ const HomeView = () => {
         <Row>
           <Col>
             <Tabs className="mb-3">
-            {roomTabs}
+              {roomTabs}
             </Tabs>
           </Col>
         </Row>
@@ -35,4 +35,4 @@ const HomeView = () => {
   );
 };
 
-export default HomeView;
+export default CalendarView;

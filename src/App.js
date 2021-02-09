@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
-import HomeView from './views/HomeView';
+import CalendarView from './views/CalendarView';
 import SettingsView from './views/SettingsView';
 import ReservationsView from './views/ReservationsView';
 import ErrorHandler from './utils/ErrorHandler';
@@ -17,7 +17,7 @@ import Footer from './components/Footer';
         <Switch>
           <RestrictedRoute path="/reservations" component={ReservationsView} />
           <RestrictedRoute path="/settings" component={SettingsView} />
-          <Route exact path="/" component={HomeView} />
+          <Route exact path="/" component={CalendarView} />
           <Route path="/" component={() => <Redirect to="/" />} />
         </Switch>
         <Footer />

@@ -49,7 +49,8 @@ const deleteUser = async (req, res, next) => {
 
 const loginUser = async (req, res, next) => {
   try {
-    const user = await db.query('CALL get_user_by_email(?)', [req.body.email]);
+    const [rows, fields] = await db.query('CALL get_user_by_email(?)', [req.body.email]);
+    const user = rows[0][0];
     if (!user)
       return res.status(403).send();
     const compareResult = await bcrypt.compare(req.body.password, user.password);

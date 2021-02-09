@@ -69,7 +69,7 @@ CREATE PROCEDURE `create_reservation` (
 MODIFIES SQL DATA
 BEGIN
     IF EXISTS 
-        (SELECT '' FROM `timeslots` WHERE `weekday`=WEEKDAY(`reservation_date`) AND `id`=`reservation_timeslot`)
+        (SELECT '' FROM `timeslots` WHERE `weekday`=(DAYOFWEEK(`reservation_date`)-1) AND `id`=`reservation_timeslot`)
     THEN
         INSERT INTO `reservations`(`date`, `timeslot`, `inspection_time`, `email`, `name`, `cid` , `society`, `description`)
         VALUES (`reservation_date`, `reservation_timeslot`, `reservation_inspection_time`, `reservation_email`, `reservation_name`, `reservation_cid` , `reservation_society`, `reservation_description`);

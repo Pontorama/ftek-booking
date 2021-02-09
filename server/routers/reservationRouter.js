@@ -6,11 +6,12 @@ const checkValidationResult = require('../utils/checkValidationResult');
 
 const router = express.Router();
 router.use(cookieParser());
+router.use(express.json());
 
 // Reservations
 router.get(
-  '/reservations/confirmed/:roomId/:year/:month',
-  param('roomId').isInt({ gt: 0 }),
+  '/reservations/confirmed/:room/:year/:month',
+  param('room').isInt({ gt: 0 }),
   param('year').isInt({ gt: 0 }),
   param('month').isInt({ gt: 0 }),
   checkValidationResult,
@@ -46,7 +47,6 @@ router.post(
   '/reservation',
   body('date').isISO8601(),
   body('timeslot').isInt({ gt: 0 }),
-  body('inspectionTime').notEmpty(),
   body('email').isEmail(),
   body('name').notEmpty(),
   body('description').notEmpty(),

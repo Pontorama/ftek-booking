@@ -9,8 +9,8 @@ router.use(cookieParser());
 
 // Timeslots
 router.get(
-  '/timeslots/:roomId',
-  param('roomId').isInt({ gt: 0 }),
+  '/timeslots/:room',
+  param('room').isInt({ gt: 0 }),
   checkValidationResult,
   timeslotController.getTimeslotsByRoom
 );
