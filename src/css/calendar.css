@@ -9,6 +9,10 @@
     transition: all 0.15s ease-in-out;
 }
 
+.react-calendar .has-reservation {
+    background-image: radial-gradient(#dee2e6 50%, white 51%);
+}
+
 .react-calendar__tile--active:enabled:focus,
 .react-calendar__tile--active,
 .react-calendar__tile--hasActive {

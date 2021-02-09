@@ -11,6 +11,16 @@
      flex-grow: 1;
  }
 
+.btn-lightgrey {
+    background-color: #dee2e6;
+    border-color: #dee2e6;
+}
+
+.btn-lightgrey:hover {
+    background-color: #caced1;
+    border-color: #caced1;
+}
+
 .btn-lightblue {
     background-color: #add8e6;
     border-color: #add8e6;
