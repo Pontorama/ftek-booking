@@ -22,7 +22,7 @@ const RulesModal = () => {
           </ul>
         </Modal.Body>
         <Modal.Footer>
-        <Button variant="secondary" onClick={() => setShowModal(false)}>Stäng</Button>
+        <Button variant="lightgrey" onClick={() => setShowModal(false)}>Stäng</Button>
         </Modal.Footer>
       </Modal>
     </>

@@ -17,7 +17,7 @@ const ReservationInfoModal = ({ timeslot, reservation }) => {
           <p>{reservation.society && `Bokad av: ${reservation.society}`}</p>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowModal(false)}>Stäng</Button>
+          <Button variant="lightgrey" onClick={() => setShowModal(false)}>Stäng</Button>
         </Modal.Footer>
       </Modal>
     </>

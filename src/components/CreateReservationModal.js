@@ -79,7 +79,7 @@ const CreateReservationModal = ({ timeslot, date, roomName }) => {
               {submitError && <Alert variant="danger">Något gick fel, det gick inte skicka bokningsförfrågan!</Alert>}
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={() => setShowSubmitModal(false)}>Stäng</Button>
+            <Button variant="lightgrey" onClick={() => setShowSubmitModal(false)}>Stäng</Button>
             <Button variant="lightblue" type="submit">Skicka</Button>
           </Modal.Footer>
         </Form>
@@ -92,7 +92,7 @@ const CreateReservationModal = ({ timeslot, date, roomName }) => {
           En bekräftelse på bokningsförfrågan skickas till den angivna e-postadressen. Du får ett till e-postmeddelande när din bokningsförfrågan har blivit behandlad.
         </Modal.Body>
          <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowSuccessModal(false)}>Stäng</Button>
+          <Button variant="lightgrey" onClick={() => setShowSuccessModal(false)}>Stäng</Button>
          </Modal.Footer>
       </Modal>
     </>

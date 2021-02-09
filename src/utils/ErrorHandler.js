@@ -14,7 +14,7 @@ const ErrorHandler = ({ children }) => {
             </Alert.Heading>
             <p>Något gick fel när sidan skulle laddas. Prova att besöka sidan igen om en liten stund.</p>
             <p>Har du fortsatta problem kan du <a href="https://ftek.se/support" target="_blank" rel="noreferrer">kontakta Spidera</a> med nedanstående information så hjälper vi dig.</p>
-            <Button variant="secondary" onClick={resetErrorBoundary}>
+            <Button variant="lightgrey" onClick={resetErrorBoundary}>
               Ladda om
             </Button>
             <hr />
