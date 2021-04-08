@@ -1,0 +1,34 @@
+.time-header{
+    width: 100%;
+    height: 100%;
+}
+
+.hour-box{
+    position: relative;
+    height: 100px;
+    width: 100%;
+}
+
+.hour-box > p{
+    position: absolute;
+    top: 0;
+    left: 15px;
+}
+
+.hour-box > hr{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding:0;
+    margin: 0;
+}
+.time-header > hr{
+    position:absolute;
+    margin: 0;
+    width:100%;
+    padding: 0;
+    left: 0;
+}
+.filler{
+    height: 81px;
+}

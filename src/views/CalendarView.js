@@ -1,38 +1,26 @@
-import { useEffect, useState } from 'react';
-import { Col, Container, Row, Tab, Tabs } from 'react-bootstrap';
-import RoomTab from '../components/RoomTab';
+import 'bootstrap/dist/css/bootstrap.css'
+import '../css/App.css';
+import { Container, Col, Row } from 'react-bootstrap';
+import Day from './Day.js';
+import TimeHeader from './TimeHeader';
 
-const CalendarView = () => {
-  const [rooms, setRooms] = useState([]);
 
-  useEffect(() => {
-    const fetchRooms = async () => {
-      const res = await fetch('/api/rooms');
-      const data = await res.json();
-      setRooms(data);
-    };
-   fetchRooms();
-  }, []);
-
-  const roomTabs = rooms.map((room) => (
-    <Tab key={room.id} eventKey={room.id} title={room.name}>
-      <RoomTab room={room} />
-    </Tab>
-  ));
-
-  return (
-    <main>
-      <Container>
+function CalendarView(){
+    return(      <Container>
         <Row>
-          <Col>
-            <Tabs className="mb-3">
-              {roomTabs}
-            </Tabs>
-          </Col>
+          <Col><TimeHeader /></Col>
+          <Col><Day day="Monday" /></Col>
+          <Col><Day day="Tuesday" /></Col>
+          <Col> <Day day="Wednesday" /></Col>
+          <Col> <Day day="Thursday" /></Col>
+          <Col> <Day day="Friday" /></Col>
+          <Col> <Day day="Saturday" /></Col>
+          <Col> <Day day="Sunday" /></Col>
         </Row>
-      </Container>
-    </main>
-  );
-};
+        <div className="navigation">
+        </div>
+      </Container>);
+}
+
 
 export default CalendarView;
